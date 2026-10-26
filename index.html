@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="Conheça o cardápio digital do Buriti Arena. Drinks, porções e muito mais." />
+  <title>Cardápio | Buriti Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="produtos.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a href="#inicio" class="brand" aria-label="Voltar ao início"><img src="logo.png"
+        alt="Logo Buriti Arena" /><span><strong>Buriti Arena</strong><small>O seu lugar é aqui</small></span></a>
+    <a class="insta-link" href="https://www.instagram.com/buritiarena/" target="_blank" rel="noopener noreferrer"
+      aria-label="Instagram do Buriti Arena"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="1.8">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+      </svg><span>Instagram</span></a>
+  </header>
+  <main id="inicio">
+    <section class="menu-section" id="cardapio" aria-labelledby="menu-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Fique à vontade</div>
+          <h1 id="menu-title">Nosso cardápio</h1>
+          <p>Uma pausa para comer bem e aproveitar.</p>
+        </div>
+        <div class="menu-count"><strong id="total-products">00</strong><span>opções no cardápio</span></div>
+      </div>
+      <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="10.8" cy="10.8" r="6.8" />
+          <path d="m16 16 5 5" />
+        </svg><input id="search" type="search" placeholder="O que deu vontade de comer?" autocomplete="off"
+          aria-label="Buscar produtos" /></div>
+      <nav class="categories" id="categories" aria-label="Categorias do cardápio"></nav>
+      <p class="search-summary" id="search-summary" role="status" hidden></p>
+      <div class="product-sections" id="products" aria-live="polite"></div>
+      <div id="empty-state" class="empty-state" hidden>
+        <h3>Nada por aqui...</h3>
+        <p>Experimente outro termo ou escolha uma categoria diferente.</p><button id="reset-filters">Ver todo o
+          cardápio</button>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-brand"><img src="logo.png" alt="" /><span>Buriti Arena<small>Buriti Alegre · GO</small></span>
+    </div>
+    <a class="footer-instagram" href="https://www.instagram.com/buritiarena/" target="_blank"
+      rel="noopener noreferrer" aria-label="Siga o Buriti Arena no Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+      </svg>
+      Siga no Instagram <span aria-hidden="true">↗</span>
+    </a>
+    <div class="footer-credits">
+      <span>© 2026 Buriti Arena. Todos os direitos reservados.</span>
+      <span>Desenvolvido por <a href="https://www.instagram.com/andersonmends__/" target="_blank"
+          rel="noopener noreferrer">Anderson Mendes de Souza</a>.</span>
+    </div>
+  </footer>
+</body>
+
+</html>
