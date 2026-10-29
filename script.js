@@ -60,57 +60,122 @@ function renderBanners() {
   const track = carousel.querySelector('.banner-track');
   const slides = carousel.querySelectorAll('.section-head');
   const dots = carousel.querySelectorAll('.banner-dot');
+  let looping = false;
+
+  // As cópias nas pontas permitem continuar na mesma direção ao completar a volta.
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
+  [firstClone, lastClone].forEach(clone => {
+    clone.setAttribute('aria-hidden', 'true');
+    clone.inert = true;
+  });
+  track.prepend(lastClone);
+  track.append(firstClone);
+  track.classList.add('banner-track--dragging');
+  track.style.transform = 'translateX(-100%)';
+  void track.offsetWidth;
+  track.classList.remove('banner-track--dragging');
+
+  function finishLoop() {
+    if (!looping) return;
+
+    // Volta da cópia para o banner original idêntico, sem uma segunda animação.
+    track.classList.add('banner-track--dragging');
+    track.style.transform = `translateX(-${(currentBanner + 1) * 100}%)`;
+    void track.offsetWidth;
+    track.classList.remove('banner-track--dragging');
+    looping = false;
+  }
+
+  track.addEventListener('transitionend', (event) => {
+    if (event.target === track && event.propertyName === 'transform') finishLoop();
+  });
 
   function showBanner(index) {
-    currentBanner = index;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    slides.forEach((slide, slideIndex) => slide.setAttribute('aria-hidden', String(slideIndex !== index)));
-    dots.forEach((dot, dotIndex) => dot.setAttribute('aria-pressed', String(dotIndex === index)));
+    if (looping) return;
+
+    currentBanner = (index + visibleBanners.length) % visibleBanners.length;
+    looping = index < 0 || index >= visibleBanners.length;
+    const targetX = -(index + 1) * viewport.clientWidth;
+    const currentX = new DOMMatrixReadOnly(window.getComputedStyle(track).transform).m41;
+    track.classList.remove('banner-track--dragging');
+    track.style.transform = `translateX(-${(index + 1) * 100}%)`;
+    slides.forEach((slide, slideIndex) => slide.setAttribute('aria-hidden', String(slideIndex !== currentBanner)));
+    dots.forEach((dot, dotIndex) => dot.setAttribute('aria-pressed', String(dotIndex === currentBanner)));
+    if (reducedMotion.matches || Math.abs(currentX - targetX) < 1) finishLoop();
   }
 
   let timer;
   function restartTimer() {
     window.clearInterval(timer);
     timer = window.setInterval(() => {
-      if (reducedMotion.matches || document.hidden || mouseOver || carousel.contains(document.activeElement)) return;
-      showBanner((currentBanner + 1) % visibleBanners.length);
-    }, 5000);
+      if (reducedMotion.matches || document.hidden || mouseOver || swipeStart || carousel.contains(document.activeElement)) return;
+      showBanner(currentBanner + 1);
+    }, 3000);
   }
 
   let swipeStart = null;
 
   viewport.addEventListener('pointerdown', (event) => {
-    if (!event.isPrimary || event.button !== 0 || swipeStart) return;
+    if (!event.isPrimary || event.button !== 0 || swipeStart || looping) return;
 
-    swipeStart = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+    const trackX = new DOMMatrixReadOnly(window.getComputedStyle(track).transform).m41;
+    swipeStart = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, trackX, horizontal: false };
+    track.classList.add('banner-track--dragging');
+    track.style.transform = `translateX(${trackX}px)`;
     viewport.setPointerCapture(event.pointerId);
     window.clearInterval(timer);
+  });
+  viewport.addEventListener('pointermove', (event) => {
+    if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
+
+    const distanceX = event.clientX - swipeStart.x;
+    const distanceY = event.clientY - swipeStart.y;
+    if (!swipeStart.horizontal) {
+      if (Math.abs(distanceX) < 6 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
+      swipeStart.horizontal = true;
+    }
+
+    const minX = -(visibleBanners.length + 1) * viewport.clientWidth;
+    const positionX = Math.max(minX, Math.min(0, swipeStart.trackX + distanceX));
+    track.style.transform = `translateX(${positionX}px)`;
   });
   viewport.addEventListener('pointerup', (event) => {
     if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
 
     const distanceX = event.clientX - swipeStart.x;
-    const distanceY = event.clientY - swipeStart.y;
+    const horizontal = swipeStart.horizontal;
+    const threshold = Math.min(60, viewport.clientWidth * 0.15);
     swipeStart = null;
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
 
-    if (Math.abs(distanceX) >= 40 && Math.abs(distanceX) > Math.abs(distanceY)) {
+    if (horizontal && Math.abs(distanceX) >= threshold) {
       const direction = distanceX < 0 ? 1 : -1;
-      showBanner((currentBanner + direction + visibleBanners.length) % visibleBanners.length);
+      showBanner(currentBanner + direction);
+    } else {
+      showBanner(currentBanner);
     }
     restartTimer();
   });
-  viewport.addEventListener('pointercancel', (event) => {
+
+  function cancelSwipe(event) {
     if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
 
     swipeStart = null;
+    showBanner(currentBanner);
     restartTimer();
-  });
+  }
+  viewport.addEventListener('pointercancel', cancelSwipe);
+  viewport.addEventListener('lostpointercapture', cancelSwipe);
 
   dots.forEach((dot, index) => dot.addEventListener('click', () => {
     showBanner(index);
     restartTimer();
   }));
-  reducedMotion.addEventListener('change', restartTimer);
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) finishLoop();
+    restartTimer();
+  });
   restartTimer();
 }
 
