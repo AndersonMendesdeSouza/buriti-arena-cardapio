@@ -257,7 +257,7 @@ const produtos = [
     preco: 39.00,
     categoria: 'petiscos',
     destaque: true,
-    selo: 'CROCANTE',
+    selo: 'ESPECIAL',
     imagem: './assets/petiscos/frangopassarinho.png'
   },
   {
@@ -287,7 +287,7 @@ const produtos = [
     preco: 49.90,
     categoria: 'petiscos',
     destaque: true,
-    selo: 'CROCANTE',
+    selo: 'IRRESISTÍVEL',
     imagem: './assets/petiscos/filetilapia.jpg'
   },
   {
@@ -339,6 +339,7 @@ const produtos = [
     descricao: 'Picanha suculenta e bem temperada, servida na chapa quente, com sabor irresistível.',
     preco: 95.00,
     categoria: 'chapa',
+    selo: 'DELICIOSO',
     destaque: true,
     imagem: 'assets/chapa/picanhachapa.jpg'
   },
@@ -398,6 +399,7 @@ const produtos = [
     preco: 28.00,
     categoria: 'janta',
     destaque: true,
+    selo: 'DESTAQUE',
     imagem: 'assets/chapa/jantinha.jpg'
   },
   {
