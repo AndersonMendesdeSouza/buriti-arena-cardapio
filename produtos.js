@@ -18,7 +18,6 @@ const categorias = [
 ];
 
 const produtos = [
-  // CERVEJAS GARRAFA
   {
     id: 1,
     nome: 'Heineken',

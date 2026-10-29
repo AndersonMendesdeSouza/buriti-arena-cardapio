@@ -9,7 +9,8 @@ const escapeHTML = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'
 
 function renderBanners() {
   const carousel = $('#banner-carousel');
-  const visibleBanners = carrosselAtivo ? banners : banners.slice(0, 1);
+  const enabledBanners = banners.filter(banner => banner.exibir !== false);
+  const visibleBanners = carrosselAtivo ? enabledBanners : enabledBanners.slice(0, 1);
 
   carousel.innerHTML = `<div class="banner-viewport"><div class="banner-track">
     ${visibleBanners.map((banner, index) => {
