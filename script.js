@@ -116,38 +116,36 @@ function renderBanners() {
 
   let swipeStart = null;
 
-  viewport.addEventListener('pointerdown', (event) => {
-    if (!event.isPrimary || event.button !== 0 || swipeStart || looping) return;
+  function startSwipe(x, y, inputId) {
+    if (swipeStart || looping) return false;
 
     const trackX = new DOMMatrixReadOnly(window.getComputedStyle(track).transform).m41;
-    swipeStart = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, trackX, horizontal: false };
+    swipeStart = { inputId, x, y, trackX, direction: null };
     track.classList.add('banner-track--dragging');
     track.style.transform = `translateX(${trackX}px)`;
-    viewport.setPointerCapture(event.pointerId);
     window.clearInterval(timer);
-  });
-  viewport.addEventListener('pointermove', (event) => {
-    if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
+    return true;
+  }
 
-    const distanceX = event.clientX - swipeStart.x;
-    const distanceY = event.clientY - swipeStart.y;
-    if (!swipeStart.horizontal) {
-      if (Math.abs(distanceX) < 6 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
-      swipeStart.horizontal = true;
+  function moveSwipe(x, y) {
+    const distanceX = x - swipeStart.x;
+    const distanceY = y - swipeStart.y;
+    if (!swipeStart.direction) {
+      if (Math.max(Math.abs(distanceX), Math.abs(distanceY)) < 6) return;
+      swipeStart.direction = Math.abs(distanceX) > Math.abs(distanceY) ? 'horizontal' : 'vertical';
     }
+    if (swipeStart.direction !== 'horizontal') return;
 
     const minX = -(visibleBanners.length + 1) * viewport.clientWidth;
     const positionX = Math.max(minX, Math.min(0, swipeStart.trackX + distanceX));
     track.style.transform = `translateX(${positionX}px)`;
-  });
-  viewport.addEventListener('pointerup', (event) => {
-    if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
+  }
 
-    const distanceX = event.clientX - swipeStart.x;
-    const horizontal = swipeStart.horizontal;
+  function endSwipe(x) {
+    const distanceX = x - swipeStart.x;
+    const horizontal = swipeStart.direction === 'horizontal';
     const threshold = Math.min(60, viewport.clientWidth * 0.15);
     swipeStart = null;
-    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
 
     if (horizontal && Math.abs(distanceX) >= threshold) {
       const direction = distanceX < 0 ? 1 : -1;
@@ -156,17 +154,66 @@ function renderBanners() {
       showBanner(currentBanner);
     }
     restartTimer();
-  });
+  }
 
-  function cancelSwipe(event) {
-    if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
+  function cancelSwipe() {
+    if (!swipeStart) return;
 
     swipeStart = null;
     showBanner(currentBanner);
     restartTimer();
   }
-  viewport.addEventListener('pointercancel', cancelSwipe);
-  viewport.addEventListener('lostpointercapture', cancelSwipe);
+
+  // No toque, touchmove permite bloquear a rolagem no Safari apenas no gesto horizontal.
+  viewport.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1) {
+      cancelSwipe();
+      return;
+    }
+
+    const touch = event.touches[0];
+    startSwipe(touch.clientX, touch.clientY, touch.identifier);
+  }, { passive: true });
+  viewport.addEventListener('touchmove', (event) => {
+    if (event.touches.length !== 1) {
+      cancelSwipe();
+      return;
+    }
+
+    const touch = event.touches[0];
+    if (!swipeStart || touch.identifier !== swipeStart.inputId) return;
+
+    moveSwipe(touch.clientX, touch.clientY);
+    if (swipeStart.direction === 'horizontal' && event.cancelable) event.preventDefault();
+  }, { passive: false });
+  viewport.addEventListener('touchend', (event) => {
+    if (!swipeStart) return;
+
+    const touch = Array.from(event.changedTouches).find(touch => touch.identifier === swipeStart.inputId);
+    if (touch) endSwipe(touch.clientX);
+  });
+  viewport.addEventListener('touchcancel', cancelSwipe);
+
+  viewport.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'touch' || !event.isPrimary || event.button !== 0) return;
+    if (startSwipe(event.clientX, event.clientY, event.pointerId)) viewport.setPointerCapture(event.pointerId);
+  });
+  viewport.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'touch' || !swipeStart || event.pointerId !== swipeStart.inputId) return;
+    moveSwipe(event.clientX, event.clientY);
+  });
+  viewport.addEventListener('pointerup', (event) => {
+    if (event.pointerType === 'touch' || !swipeStart || event.pointerId !== swipeStart.inputId) return;
+
+    endSwipe(event.clientX);
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+  });
+
+  function cancelPointerSwipe(event) {
+    if (event.pointerType !== 'touch' && swipeStart && event.pointerId === swipeStart.inputId) cancelSwipe();
+  }
+  viewport.addEventListener('pointercancel', cancelPointerSwipe);
+  viewport.addEventListener('lostpointercapture', cancelPointerSwipe);
 
   dots.forEach((dot, index) => dot.addEventListener('click', () => {
     showBanner(index);
