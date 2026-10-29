@@ -14,7 +14,7 @@ const categorias = [
   { id: 'dose', nome: 'Doses', icone: '🍶' },
   { id: 'bebidas', nome: 'Bebidas', icone: '🥤' },
   { id: 'sucos', nome: 'Sucos', icone: '🧃' },
-  { id: 'baladeiros', nome: 'Baladeiros', icone: '🍫' },
+  { id: 'baladeiros', nome: 'Baleiros', icone: '🍫' },
   { id: 'sobremesas', nome: 'Sobremesas', icone: '🍮' },
 ];
 
@@ -216,7 +216,7 @@ const produtos = [
     categoria: 'petiscos',
     destaque: false,
     selo: 'FAVORITO',
-    imagem: './assets/petiscos/abacaxipinga.jpg'
+    imagem: './assets/petiscos/abacaxipinga.png'
   },
   {
     id: 22,
@@ -227,11 +227,11 @@ const produtos = [
     categoria: 'petiscos',
     destaque: true,
     selo: 'CROCANTE',
-    imagem: './assets/petiscos/batatatradicional.jpg'
+    imagem: './assets/petiscos/batatatradicional.png'
   },
   {
     id: 23,
-    nome: 'Batata frita arena',
+    nome: 'Batata frita Arena',
     descricao: 'Nossa batata frita especial, preparada com muito sabor para compartilhar.',
     preco: 38.00,
     categoria: 'petiscos',
@@ -242,8 +242,8 @@ const produtos = [
   },
   {
     id: 24,
-    nome: 'Bolinho de carne seca',
-    descricao: 'Bolinhos dourados e crocantes com recheio saboroso de carne seca.',
+    nome: 'Bolinho de carne-seca',
+    descricao: 'Bolinhos dourados e crocantes com recheio saboroso de carne-seca.',
     preco: 35.00,
     categoria: 'petiscos',
     adicional: { nome: 'Maionese', preco: 3.00 },
@@ -283,7 +283,7 @@ const produtos = [
   },
   {
     id: 28,
-    nome: 'Filé tilápia',
+    nome: 'Filé de tilápia',
     descricao: 'Filés de tilápia douradinhos, macios por dentro e crocantes por fora.',
     preco: 49.90,
     categoria: 'petiscos',
@@ -293,7 +293,7 @@ const produtos = [
   },
   {
     id: 29,
-    nome: 'Pastelzinho carne e queijo',
+    nome: 'Pastelzinho de carne e queijo',
     descricao: 'Pastéis crocantes com recheio delicioso de carne e queijo derretido.',
     preco: 40.00,
     adicional: { nome: 'Maionese', preco: 3.00 },
@@ -324,7 +324,7 @@ const produtos = [
   },
   {
     id: 32,
-    nome: 'Tomate tira gosto',
+    nome: 'Tomate tira-gosto',
     descricao: 'Tomates fresquinhos e bem temperados, um tira-gosto leve e saboroso.',
     preco: 18.00,
     categoria: 'petiscos',
@@ -336,7 +336,7 @@ const produtos = [
   // CHAPA QUENTE
   {
     id: 33,
-    nome: 'Chapa quente picanha',
+    nome: 'Picanha na chapa',
     descricao: 'Picanha suculenta e bem temperada, servida na chapa quente, com sabor irresistível.',
     preco: 95.00,
     categoria: 'chapa',
@@ -346,8 +346,8 @@ const produtos = [
   },
   {
     id: 34,
-    nome: 'Chapa quente contra filé',
-    descricao: 'Contra filé macio e suculento, preparado na chapa quente e servido no ponto certo.',
+    nome: 'Contrafilé na chapa',
+    descricao: 'Contrafilé macio e suculento, preparado na chapa quente e servido no ponto certo.',
     preco: 78.00,
     categoria: 'chapa',
     destaque: false,
@@ -443,7 +443,7 @@ const produtos = [
   },
   {
     id: 44,
-    nome: 'Caipifruta Limão Taiti',
+    nome: 'Caipifruta de limão-taiti',
     descricao: 'Drink refrescante com limão-taiti, gelo e um toque cítrico irresistível.',
     preco: 21.90,
     categoria: 'drinks',
@@ -452,7 +452,7 @@ const produtos = [
   },
   {
     id: 45,
-    nome: 'Caipifruta Morango e Maracujá',
+    nome: 'Caipifruta de morango e maracujá',
     descricao: 'Combinação tropical de morango e maracujá, com sabor frutado e refrescante.',
     preco: 21.90,
     categoria: 'drinks',
@@ -675,7 +675,7 @@ const produtos = [
   },
   {
     id: 69,
-    nome: 'H2O Tradicional',
+    nome: 'H2OH! Limão',
     descricao: 'Bebida gaseificada com sabor suave de limão, leve e refrescante.',
     preco: 7.00,
     categoria: 'bebidas',
@@ -684,7 +684,7 @@ const produtos = [
   },
   {
     id: 70,
-    nome: 'H2O Limoneto',
+    nome: 'H2OH! Limoneto',
     descricao: 'Bebida gaseificada com sabor cítrico de limão, ideal para refrescar.',
     preco: 7.00,
     categoria: 'bebidas',
@@ -763,7 +763,7 @@ const produtos = [
   {
     id: 78,
     nome: 'Bubbaloo',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    descricao: 'Goma de mascar Bubbaloo com recheio líquido.',
     preco: 1.00,
     categoria: 'baladeiros',
     destaque: false,
@@ -772,7 +772,7 @@ const produtos = [
   {
     id: 79,
     nome: 'FINI',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    descricao: 'Balas Fini para adoçar o seu dia.',
     preco: 10.00,
     categoria: 'baladeiros',
     destaque: false,
@@ -781,7 +781,7 @@ const produtos = [
   {
     id: 80,
     nome: 'HALLS',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    descricao: 'Balas Halls para saborear a qualquer momento.',
     preco: 4.00,
     categoria: 'baladeiros',
     destaque: false,
@@ -789,8 +789,8 @@ const produtos = [
   },
   {
     id: 82,
-    nome: 'Sonho De Valsa',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    nome: 'Sonho de Valsa',
+    descricao: 'Bombom com wafer crocante e recheio cremoso.',
     preco: 3.00,
     categoria: 'baladeiros',
     destaque: false,
@@ -799,7 +799,7 @@ const produtos = [
   {
     id: 83,
     nome: 'Trident',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    descricao: 'Goma de mascar Trident para saborear a qualquer momento.',
     preco: 5.00,
     categoria: 'baladeiros',
     destaque: false,
@@ -807,8 +807,8 @@ const produtos = [
   },
   {
     id: 84,
-    nome: 'Snikes',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    nome: 'Snickers',
+    descricao: 'Barra de chocolate com amendoim e caramelo.',
     preco: 7.00,
     categoria: 'baladeiros',
     destaque: false,
@@ -817,7 +817,7 @@ const produtos = [
   {
     id: 85,
     nome: 'Kinder Joy',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    descricao: 'Doce cremoso com duas bolinhas crocantes cobertas de cacau.',
     preco: 12.00,
     categoria: 'baladeiros',
     destaque: false,
@@ -827,8 +827,8 @@ const produtos = [
   //Sobremesa
   {
     id: 86,
-    nome: 'Creme Maracujá',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    nome: 'Creme de maracujá',
+    descricao: 'Sobremesa cremosa de maracujá, com sabor tropical.',
     preco: 18.00,
     categoria: 'sobremesas',
     destaque: false,
@@ -836,8 +836,8 @@ const produtos = [
   },
   {
     id: 87,
-    nome: 'Creme Morango',
-    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    nome: 'Creme de morango',
+    descricao: 'Sobremesa cremosa de morango, com sabor suave e frutado.',
     preco: 18.00,
     categoria: 'sobremesas',
     destaque: false,
