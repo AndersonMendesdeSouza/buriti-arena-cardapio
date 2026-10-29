@@ -15,6 +15,7 @@ const categorias = [
   { id: 'bebidas', nome: 'Bebidas', icone: '🥤' },
   { id: 'sucos', nome: 'Sucos', icone: '🧃' },
   { id: 'baladeiros', nome: 'Baladeiros', icone: '🍫' },
+  { id: 'sobremesas', nome: 'Sobremesas', icone: '🍮' },
 ];
 
 const produtos = [
@@ -813,10 +814,19 @@ const produtos = [
     destaque: false,
     imagem: './assets/baladeiro/snickers.png'
   },
+  {
+    id: 85,
+    nome: 'Kinder Joy',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 12.00,
+    categoria: 'baladeiros',
+    destaque: false,
+    imagem: './assets/baladeiro/kinder-joy.png'
+  },
 
   //Sobremesa
   {
-    id: 85,
+    id: 86,
     nome: 'Creme Maracujá',
     descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
     preco: 18.00,
@@ -825,7 +835,7 @@ const produtos = [
     imagem: './assets/baladeiro/creme-maracuja.png'
   },
   {
-    id: 86,
+    id: 87,
     nome: 'Creme Morango',
     descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
     preco: 18.00,
