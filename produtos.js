@@ -465,7 +465,7 @@ const produtos = [
     preco: 15.00,
     categoria: 'drinks',
     destaque: false,
-    imagem: './assets/drinks/cozumel.jpg'
+    imagem: './assets/drinks/cozumel.png'
   },
   {
     id: 47,
@@ -474,7 +474,7 @@ const produtos = [
     preco: 25.00,
     categoria: 'drinks',
     destaque: false,
-    imagem: './assets/drinks/moscow.jpg'
+    imagem: './assets/drinks/moscow.png'
   },
   {
     id: 48,
@@ -492,7 +492,7 @@ const produtos = [
     preco: 28.00,
     categoria: 'drinks',
     destaque: false,
-    imagem: './assets/drinks/tropicalgin.jpg'
+    imagem: './assets/drinks/tropicalgin.png'
   },
 
   // SHOTS
@@ -514,7 +514,7 @@ const produtos = [
     preco: 15.00,
     categoria: 'dose',
     destaque: false,
-    imagem: './assets/doses/ballena.jpg'
+    imagem: './assets/doses/ballena.png'
   },
   {
     id: 52,
@@ -523,7 +523,7 @@ const produtos = [
     preco: 13.00,
     categoria: 'dose',
     destaque: false,
-    imagem: './assets/doses/campari.jpg'
+    imagem: './assets/doses/campari.png'
   },
   {
     id: 53,
@@ -532,7 +532,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'dose',
     destaque: false,
-    imagem: './assets/doses/cabare.jpg'
+    imagem: './assets/doses/cabare.png'
   },
   {
     id: 54,
@@ -541,7 +541,7 @@ const produtos = [
     preco: 18.00,
     categoria: 'dose',
     destaque: false,
-    imagem: './assets/doses/chivas.jpg'
+    imagem: './assets/doses/chivas.png'
   },
   {
     id: 55,
