@@ -12,7 +12,9 @@ const categorias = [
   { id: 'drinks', nome: 'Drinks', icone: '🍹' },
   { id: 'shot', nome: 'Shots', icone: '🥃' },
   { id: 'dose', nome: 'Doses', icone: '🥤' },
-  { id: 'bebidas', nome: 'Bebidas sem Álcool', icone: '🥤' }
+  { id: 'bebidas', nome: 'Bebidas sem Álcool', icone: '🥤' },
+  { id: 'sucos', nome: 'Sucos', icone: '🧃' },
+  { id: 'baladeiros', nome: 'Baladeiros', icone: '🍫' },
 ];
 
 const produtos = [
@@ -688,4 +690,146 @@ const produtos = [
     imagem: './assets/bebidas/h2o-limoneto.png'
   },
 
+  // SUCOS NATURAIS
+  {
+    id: 71,
+    nome: 'Suco de Laranja',
+    descricao: 'Suco natural de laranja, preparado com frutas frescas. Sabor cítrico, doce e refrescante.',
+    preco: 12.00,
+    categoria: 'sucos',
+    destaque: false,
+    imagem: './assets/sucos/suco-laranja.png'
+  },
+  {
+    id: 72,
+    nome: 'Suco de Limão',
+    descricao: 'Suco natural de limão, preparado na hora. Leve, cítrico e muito refrescante.',
+    preco: 12.00,
+    categoria: 'sucos',
+    destaque: false,
+    imagem: './assets/sucos/suco-limao.png'
+  },
+  {
+    id: 73,
+    nome: 'Suco de Maracujá',
+    descricao: 'Suco de maracujá com sabor tropical, equilibrando a doçura e a acidez da fruta.',
+    preco: 12.00,
+    categoria: 'sucos',
+    destaque: false,
+    imagem: './assets/sucos/suco-maracuja.png'
+  },
+  {
+    id: 74,
+    nome: 'Suco de Morango',
+    descricao: 'Suco de morango com sabor frutado, levemente adocicado e refrescante.',
+    preco: 12.00,
+    categoria: 'sucos',
+    destaque: false,
+    imagem: './assets/sucos/suco-morango.png'
+  },
+  {
+    id: 75,
+    nome: 'Suco Dois Sabores',
+    descricao: 'Combine dois sabores de sua preferência em um único suco. Uma mistura deliciosa e refrescante.',
+    preco: 15.00,
+    categoria: 'sucos',
+    destaque: false,
+    imagem: './assets/sucos/doissabor.png'
+  },
+
+  // SUCOS DE LATA
+  {
+    id: 76,
+    nome: 'Suco Del Valle Pêssego',
+    descricao: 'Bebida de fruta Del Valle sabor pêssego, com sabor suave e adocicado. Servida gelada em lata.',
+    preco: 6.00,
+    categoria: 'sucos',
+    destaque: false,
+    imagem: './assets/sucos/del-valle-pessego.png'
+  },
+  {
+    id: 77,
+    nome: 'Suco Del Valle Uva',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 6.00,
+    categoria: 'sucos',
+    destaque: false,
+    imagem: './assets/sucos/del-valle-uva.png'
+  },
+
+  //Baladeiro
+  {
+    id: 78,
+    nome: 'Bubbaloo',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 1.00,
+    categoria: 'baladeiros',
+    destaque: false,
+    imagem: './assets/baladeiro/bubbaloo.png'
+  },
+  {
+    id: 79,
+    nome: 'FINI',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 10.00,
+    categoria: 'baladeiros',
+    destaque: false,
+    imagem: './assets/baladeiro/fini.png'
+  },
+  {
+    id: 80,
+    nome: 'HALLS',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 4.00,
+    categoria: 'baladeiros',
+    destaque: false,
+    imagem: './assets/baladeiro/halls.png'
+  },
+  {
+    id: 82,
+    nome: 'Sonho De Valsa',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 3.00,
+    categoria: 'baladeiros',
+    destaque: false,
+    imagem: './assets/baladeiro/sonho-de-valsa.png'
+  },
+  {
+    id: 83,
+    nome: 'Trident',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 5.00,
+    categoria: 'baladeiros',
+    destaque: false,
+    imagem: './assets/baladeiro/trident.png'
+  },
+  {
+    id: 84,
+    nome: 'Snikes',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 7.00,
+    categoria: 'baladeiros',
+    destaque: false,
+    imagem: './assets/baladeiro/snickers.png'
+  },
+
+  //Sobremesa
+  {
+    id: 85,
+    nome: 'Creme Maracujá',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 18.00,
+    categoria: 'sobremesas',
+    destaque: false,
+    imagem: './assets/baladeiro/creme-maracuja.png'
+  },
+  {
+    id: 86,
+    nome: 'Creme Morango',
+    descricao: 'Bebida de fruta Del Valle sabor uva, com sabor marcante e adocicado. Servida gelada em lata.',
+    preco: 18.00,
+    categoria: 'sobremesas',
+    destaque: false,
+    imagem: './assets/baladeiro/creme-morango.png'
+  }
 ];

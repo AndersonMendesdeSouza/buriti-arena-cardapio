@@ -6,6 +6,113 @@ let currentCategory = 'todos';
 const money = (n) => n.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
 const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const escapeHTML = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function renderBanners() {
+  const carousel = $('#banner-carousel');
+  const visibleBanners = carrosselAtivo ? banners : banners.slice(0, 1);
+
+  carousel.innerHTML = `<div class="banner-viewport"><div class="banner-track">
+    ${visibleBanners.map((banner, index) => {
+      const hasText = [banner.chamada, banner.titulo, banner.destaque, banner.descricao]
+        .some(text => typeof text === 'string' && text.trim() !== '');
+      const headingTag = index === 0 ? 'h1' : 'h2';
+
+      return `<div class="section-head ${hasText ? 'section-head--with-text' : 'section-head--image-only'} ${banner.imagemDesktop ? 'section-head--responsive-image' : ''}"
+        role="group" aria-label="Banner ${index + 1} de ${visibleBanners.length}" aria-hidden="${index !== 0}">
+        <picture>
+          ${banner.imagemDesktop ? `<source media="(min-width: 621px)" srcset="${escapeHTML(banner.imagemDesktop)}" />` : ''}
+          <img class="welcome-photo" src="${escapeHTML(banner.imagem)}" alt="${escapeHTML(banner.alt || '')}"
+            fetchpriority="${index === 0 ? 'high' : 'auto'}" decoding="async" draggable="false" />
+        </picture>
+        ${hasText ? `<div class="welcome-copy">
+          ${banner.chamada?.trim() ? `<div class="section-kicker">${escapeHTML(banner.chamada)}</div>` : ''}
+          ${banner.titulo?.trim() || banner.destaque?.trim() ? `<${headingTag} class="banner-title">
+            ${banner.titulo?.trim() ? escapeHTML(banner.titulo) : ''}
+            ${banner.titulo?.trim() && banner.destaque?.trim() ? '<br />' : ''}
+            ${banner.destaque?.trim() ? `<em>${escapeHTML(banner.destaque)}<span class="welcome-period">.</span></em>` : ''}
+          </${headingTag}>` : ''}
+          ${banner.descricao?.trim() ? `<p>${escapeHTML(banner.descricao)}</p>` : ''}
+        </div>` : ''}
+        ${hasText && banner.exibirContagem ? `<div class="menu-count"><strong>${String(produtos.length).padStart(2, '0')}</strong><span>opções no cardápio</span></div>` : ''}
+      </div>`;
+    }).join('')}
+  </div></div>`;
+
+  if (visibleBanners.length < 2) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let currentBanner = 0;
+  let mouseOver = false;
+
+  carousel.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'mouse') mouseOver = true;
+  });
+  carousel.addEventListener('pointerleave', () => { mouseOver = false; });
+
+  carousel.insertAdjacentHTML('beforeend', `<div class="banner-controls" aria-label="Controles dos banners">
+    ${visibleBanners.map((banner, index) => `<button type="button" class="banner-dot"
+      data-banner="${index}" aria-label="Mostrar banner ${index + 1}" aria-pressed="${index === 0}"></button>`).join('')}
+  </div>`);
+
+  const viewport = carousel.querySelector('.banner-viewport');
+  viewport.classList.add('banner-viewport--draggable');
+  const track = carousel.querySelector('.banner-track');
+  const slides = carousel.querySelectorAll('.section-head');
+  const dots = carousel.querySelectorAll('.banner-dot');
+
+  function showBanner(index) {
+    currentBanner = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    slides.forEach((slide, slideIndex) => slide.setAttribute('aria-hidden', String(slideIndex !== index)));
+    dots.forEach((dot, dotIndex) => dot.setAttribute('aria-pressed', String(dotIndex === index)));
+  }
+
+  let timer;
+  function restartTimer() {
+    window.clearInterval(timer);
+    timer = window.setInterval(() => {
+      if (reducedMotion.matches || document.hidden || mouseOver || carousel.contains(document.activeElement)) return;
+      showBanner((currentBanner + 1) % visibleBanners.length);
+    }, 5000);
+  }
+
+  let swipeStart = null;
+
+  viewport.addEventListener('pointerdown', (event) => {
+    if (!event.isPrimary || event.button !== 0 || swipeStart) return;
+
+    swipeStart = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+    viewport.setPointerCapture(event.pointerId);
+    window.clearInterval(timer);
+  });
+  viewport.addEventListener('pointerup', (event) => {
+    if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
+
+    const distanceX = event.clientX - swipeStart.x;
+    const distanceY = event.clientY - swipeStart.y;
+    swipeStart = null;
+
+    if (Math.abs(distanceX) >= 40 && Math.abs(distanceX) > Math.abs(distanceY)) {
+      const direction = distanceX < 0 ? 1 : -1;
+      showBanner((currentBanner + direction + visibleBanners.length) % visibleBanners.length);
+    }
+    restartTimer();
+  });
+  viewport.addEventListener('pointercancel', (event) => {
+    if (!swipeStart || event.pointerId !== swipeStart.pointerId) return;
+
+    swipeStart = null;
+    restartTimer();
+  });
+
+  dots.forEach((dot, index) => dot.addEventListener('click', () => {
+    showBanner(index);
+    restartTimer();
+  }));
+  reducedMotion.addEventListener('change', restartTimer);
+  restartTimer();
+}
+
 function renderCategories(){
   categoriesNode.innerHTML = categorias.map(cat => `<button class="category-chip ${cat.id === currentCategory ? 'active' : ''}" data-category="${cat.id}" aria-pressed="${cat.id === currentCategory}"><span>${cat.icone}</span>${escapeHTML(cat.nome)}</button>`).join('');
 }
@@ -78,7 +185,6 @@ function renderProducts() {
   }
 
   productsNode.innerHTML = sectionsHTML;
-  $('#total-products').textContent = String(produtos.length).padStart(2, '0');
   $('#empty-state').hidden = filtered.length > 0;
 
   const summary = $('#search-summary');
@@ -95,4 +201,4 @@ categoriesNode.addEventListener('click', (e) => {
 });
 search.addEventListener('input', renderProducts);
 $('#reset-filters').addEventListener('click', () => {currentCategory='todos';search.value='';renderCategories();renderProducts();search.focus();});
-renderCategories(); renderProducts();
+renderBanners(); renderCategories(); renderProducts();

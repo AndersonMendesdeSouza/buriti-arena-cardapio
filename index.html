@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script src="produtos.js" defer></script>
+  <script src="banners.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 
@@ -28,19 +29,8 @@
       </svg><span>Instagram</span></a>
   </header>
   <main id="inicio">
-    <section class="menu-section" id="cardapio" aria-labelledby="menu-title">
-      <div class="section-head">
-        <img class="welcome-photo"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRgEjBEJANA2Y8s8YfGbxJFy9jjoYvZtd2Ggctog2sNgidNPDX4BrHQN4&s=10"
-          sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 1200px) 55vw, 625px"
-          alt="Hambúrguer com queijo, salada e molho especial" fetchpriority="high" decoding="async" />
-        <div class="welcome-copy">
-          <div class="section-kicker">Fique à vontade</div>
-          <h1 id="menu-title">Boa comida.<br /><em>Bons momentos<span class="welcome-period">.</span></em></h1>
-          <p>Uma pausa para comer bem e aproveitar.</p>
-        </div>
-        <div class="menu-count"><strong id="total-products">00</strong><span>opções no cardápio</span></div>
-      </div>
+    <section class="menu-section" id="cardapio" aria-label="Cardápio Buriti Arena">
+      <div id="banner-carousel" aria-label="Banners do cardápio"></div>
       <div class="menu-controls">
         <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="10.8" cy="10.8" r="6.8" />
