@@ -189,7 +189,7 @@ a:focus-visible, button:focus-visible, .product-grid:focus-visible {
 @media (hover: hover) and (pointer: fine) {
   .product-card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px #203c2a0d, 0 12px 24px -10px #203c2a38; }
 }
-.product-image { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #f4f5f3; }
+.product-image { position: relative; aspect-ratio: 3 / 3; overflow: hidden; background: #f4f5f3; }
 .product-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .product-section[data-category="cervejas"] .product-image { background: #fff; }
 .product-section[data-category="cervejas"] .product-image img { object-fit: contain; padding: 16px; }
@@ -221,6 +221,37 @@ a:focus-visible, button:focus-visible, .product-grid:focus-visible {
 .product-decoration, .product-mark { display: none; }
 .product-info h3 { font-size: 20px; font-weight: 500; letter-spacing: -.5px; line-height: 1.35; margin: 6px 0 9px; }
 .product-info p { flex: 1; color: var(--muted); font-size: 14px; line-height: 1.65; margin-bottom: 20px; }
+.product-additionals { margin-bottom: 16px; font-size: 14px; }
+.product-additionals summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #c9dfd3;
+  border-radius: 12px;
+  background: var(--green-soft);
+  color: #356f50;
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+}
+.product-additionals summary::-webkit-details-marker { display: none; }
+.product-additionals summary::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+.product-additionals[open] summary::after { transform: translateY(2px) rotate(225deg); }
+.product-additionals summary:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+.product-additional { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 14px 0; }
+.product-additional span { min-width: 0; overflow-wrap: anywhere; }
+.product-additional strong { flex: none; font-weight: 500; white-space: nowrap; }
 .product-bottom { border-top: 1px solid #12801255; padding-top: 14px; }
 .product-bottom strong { color: var(--dark); font-size: 20px; font-weight: 600; letter-spacing: -.4px; }
 .product-grid:empty { display: none; }

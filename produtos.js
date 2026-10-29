@@ -1,42 +1,691 @@
-// DEMONSTRAÇÃO: substitua nomes, descrições, preços e imagens pelos itens reais.
-// Fotos ilustrativas hospedadas externamente; para produção, use fotos autorizadas do estabelecimento.
 const categorias = [
-  { id: 'todos', nome: 'Tudo', icone: '✳' },
-  { id: 'destaques', nome: 'Destaques', icone: '★' },
-  { id: 'pratos-feitos', nome: 'Pratos feitos', icone: '🍽️' },
-  { id: 'porcoes', nome: 'Porções', icone: '🍟' },
-  { id: 'burgers', nome: 'Hambúrgueres', icone: '🍔' },
-  { id: 'espetinhos', nome: 'Espetinhos', icone: '🔥' },
-  { id: 'cervejas', nome: 'Cervejas', icone: '🍺' },
+  { id: 'todos', nome: 'Tudo', icone: '✳️' },
+  { id: 'destaques', nome: 'Destaques', icone: '⭐' },
+  { id: 'cervejas-garrafa', nome: 'Cervejas Garrafa', icone: '🍾' },
+  { id: 'cervejas-lata', nome: 'Cervejas Lata', icone: '🥫' },
+  { id: 'cervejas-long-neck', nome: 'Cervejas Long Neck', icone: '🍾' },
+  { id: 'chopp', nome: 'Chopp', icone: '🍺' },
+  { id: 'petiscos', nome: 'Petiscos', icone: '🍟' },
+  { id: 'chapa', nome: 'Chapa Quente', icone: '🥩' },
+  { id: 'guarnicoes', nome: 'Guarnições', icone: '🍲' },
+  { id: 'janta', nome: 'Jantinhas', icone: '🍛' },
   { id: 'drinks', nome: 'Drinks', icone: '🍹' },
-  { id: 'bebidas', nome: 'Bebidas', icone: '🥤' }
+  { id: 'shot', nome: 'Shots', icone: '🥃' },
+  { id: 'dose', nome: 'Doses', icone: '🥤' },
+  { id: 'bebidas', nome: 'Bebidas sem Álcool', icone: '🥤' }
 ];
+
 const produtos = [
-  {id:1, nome:'Batata Arena', descricao:'Batatas crocantes, cheddar cremoso e bacon em pedaços.', preco:34.90, categoria:'porcoes', destaque:true, selo:'MAIS PEDIDO', imagem:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=900&q=85'},
-  {id:2, nome:'Arena Burger', descricao:'Pão macio, burger suculento, queijo, salada e molho especial.', preco:32.90, categoria:'burgers', destaque:true, selo:'FAVORITO', imagem:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&q=85'},
-  {id:3, nome:'Caipirinha Clássica', descricao:'Limão fresco, gelo e aquele equilíbrio perfeito.', preco:22.00, categoria:'drinks', destaque:true, selo:'REFRESCANTE', imagem:'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=900&q=85'},
-  {id:4, nome:'Frango Crocante', descricao:'Tirinhas de frango empanadas, douradas e cheias de sabor.', preco:42.00, categoria:'porcoes', destaque:true, imagem:'https://images.unsplash.com/photo-1562967914-608f82629710?w=900&q=85'},
-  {id:5, nome:'Porção de Torresmo', descricao:'Torresmo dourado e crocante, servido com limão.', preco:34.90, categoria:'porcoes', destaque:false, selo:'PRA DIVIDIR', imagem:'https://static.itdg.com.br/images/640-auto/554ff987526b82a25098a9e2ceb0fd5d/torre-baixa.jpg'},
-  {id:6, nome:'Burger Duplo', descricao:'Dois burgers, queijo derretido e molho da casa.', preco:39.90, categoria:'burgers', destaque:false, imagem:'https://images.unsplash.com/photo-1550547660-d9450f859349?w=900&q=85'},
-  {id:7, nome:'Espetinho Bovino', descricao:'Carne selecionada na brasa, tempero especial.', preco:15.00, categoria:'espetinhos', destaque:false, imagem:'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=900&q=85'},
-  {id:8, nome:'Espetinho de Frango', descricao:'Frango macio, douradinho e temperado na medida.', preco:13.00, categoria:'espetinhos', destaque:false, imagem:'https://thumb.tidesquare.com/tour/public/product/PRV3006455682/PRD3010379765/origin/2-145.jpg?type=wide'},
-  {id:9, nome:'Gin Tropical', descricao:'Gin, frutas cítricas e um toque tropical.', preco:29.90, categoria:'drinks', destaque:false, imagem:'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=900&q=85'},
-  {id:10, nome:'Mojito', descricao:'Hortelã, limão, gelo e muito frescor.', preco:26.00, categoria:'drinks', destaque:false, imagem:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=900&q=85'},
-  {id:11, nome:'Refrigerante Lata', descricao:'350 ml. Consulte os sabores disponíveis.', preco:7.00, categoria:'bebidas', destaque:false, imagem:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=900&q=85'},
-  {id:12, nome:'Água Mineral sem Gás', descricao:'Água mineral sem gás, servida gelada. Garrafa de 500 ml.', preco:5.00, categoria:'bebidas', destaque:false, imagem:'https://mambodelivery.vtexassets.com/arquivos/ids/248274-900-675/135217.jpg'},
-  {id:13, nome:'PF de Picanha', descricao:'Picanha grelhada com arroz, feijão, farofa e salada fresca.', preco:49.90, categoria:'pratos-feitos', destaque:false, imagem:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UpnYKdvEnH93D1dsTCETLJKLV22MZZVHhgJOW8FXhFal5SQGZj20Yf0&s=10'},
-  {id:14, nome:'PF de Cupim', descricao:'Cupim assado com arroz, feijão, farofa e salada fresca.', preco:39.90, categoria:'pratos-feitos', destaque:false, imagem:'https://omatuto.com.br/img/pratos_executivos/Cupim.webp'},
-  {id:15, nome:'PF de Frango', descricao:'Filé de frango grelhado com arroz, feijão, farofa e salada fresca.', preco:29.90, categoria:'pratos-feitos', destaque:false, imagem:'https://s3.static.brasilescola.uol.com.br/be/2020/11/almoco.jpg'},
-  {id:16, nome:'Caipiroska de Maracujá', descricao:'Vodka, maracujá, açúcar e gelo, com aquele toque tropical.', preco:26.90, categoria:'drinks', destaque:false, imagem:'https://www.rbsdirect.com.br/imagesrc/25691214.jpg?w=700'},
-  {id:17, nome:'Gin Tônica', descricao:'Gin, água tônica, gelo e limão. Leve e refrescante.', preco:29.90, categoria:'drinks', destaque:false, imagem:'https://solysombra-lounge.fr/assets/img/food/cocktail-gin-tonic.png'},
-  {id:18, nome:'Aperol Spritz', descricao:'Aperol, espumante e água com gás, finalizados com laranja.', preco:32.90, categoria:'drinks', destaque:false, imagem:'https://coelmar.com.br/wp-content/uploads/2024/01/0uzNVM9.jpg'},
-  {id:19, nome:'Tropical sem Álcool', descricao:'Sucos de abacaxi e laranja com xarope de romã e gelo.', preco:18.90, categoria:'drinks', destaque:false, selo:'SEM ÁLCOOL', imagem:'https://www.teisseire.fr/thumbnails/media100/rc/fT8bHYk6/uploads/63c14c7e97f89/cocktail-des-pirates-web-retina.jpg'},
-  {id:20, nome:'Mandioca Frita', descricao:'Mandioca dourada por fora e macia por dentro, com uma pitada de sal.', preco:24.90, categoria:'porcoes', destaque:false, imagem:'https://panelinha-sitenovo.s3-sa-east-1.amazonaws.com/receita/964494000000-Mandioca-frita.jpg'},
-  {id:21, nome:'Isca de Tilápia', descricao:'Tirinhas de tilápia empanadas e crocantes, acompanhadas de limão e molho.', preco:44.90, categoria:'porcoes', destaque:false, imagem:'https://pesqueirosantoignacio.com.br/imgs/tilapia.webp'},
-  {id:22, nome:'Suco Natural de Laranja', descricao:'Suco de laranja preparado na hora. Copo de 300 ml.', preco:9.90, categoria:'bebidas', destaque:false, imagem:'https://www.frutarica.com.br/imagens/informacoes/polpa-fruta-laranja-02.jpg'},
-  {id:23, nome:'Água Mineral com Gás', descricao:'Água mineral com gás, servida gelada. Garrafa de 500 ml.', preco:6.00, categoria:'bebidas', destaque:false, imagem:'https://bistek.vtexassets.com/arquivos/ids/159278-900-675/agua-mineral-crystal-500ml-com-gas.jpg'},
-  {id:24, nome:'Heineken 600 ml', descricao:'Heineken Lager, servida gelada. Garrafa de 600 ml.', preco:18.90, categoria:'cervejas', destaque:false, imagem:'https://www.arenaatacado.com.br/on/demandware.static/-/Sites-storefront-catalog-sv/default/dwf0689e59/Produtos/279480-0000078905498-cerveja%20heineken%20garrafa%20600ml-heineken-1.jpg'},
-  {id:25, nome:'Original 600 ml', descricao:'Original Pilsen, servida gelada. Garrafa de 600 ml.', preco:15.90, categoria:'cervejas', destaque:false, imagem:'https://shoppr.com.br/cdn/shop/products/5537170_4540840_Orig-660ml-01w_2048x.jpg?v=1449331230'},
-  {id:26, nome:'Brahma 600 ml', descricao:'Brahma Chopp, servida gelada. Garrafa de 600 ml.', preco:12.90, categoria:'cervejas', destaque:false, imagem:'https://acdn-us.mitiendanube.com/stores/001/043/122/products/cerveja-brahma-600-ml1-b7ff237e7831df0cdf17686644305635-1024-1024.jpg'},
-  {id:27, nome:'Skol 600 ml', descricao:'Skol Pilsen, servida gelada. Garrafa de 600 ml.', preco:11.90, categoria:'cervejas', destaque:false, imagem:'https://www.ab-inbev.com/img/brand-assets/Skol_Card.png'}
+  // CERVEJAS GARRAFA
+  {
+    id: 1,
+    nome: 'Heineken',
+    descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
+    preco: 14.90,
+    categoria: 'cervejas-garrafa',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-garrafa/heineken.png'
+  },
+  {
+    id: 2,
+    nome: 'Amstel',
+    descricao: 'Cerveja puro malte, equilibrada e de sabor suave.',
+    preco: 11.90,
+    categoria: 'cervejas-garrafa',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-garrafa/amstel.png'
+  },
+  {
+    id: 3,
+    nome: 'Corona Extra',
+    descricao: 'Cerveja leve, suave e refrescante, com sabor delicado.',
+    preco: 15.90,
+    categoria: 'cervejas-garrafa',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-garrafa/corona.png'
+  },
+  {
+    id: 4,
+    nome: 'Antarctica',
+    descricao: 'Cerveja clássica, leve e refrescante, ideal para bons momentos.',
+    preco: 11.90,
+    categoria: 'cervejas-garrafa',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-garrafa/antarctica.png'
+  },
+  {
+    id: 5,
+    nome: 'Antarctica Original',
+    descricao: 'Cerveja tradicional, de sabor encorpado e amargor equilibrado.',
+    preco: 13.90,
+    categoria: 'cervejas-garrafa',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-garrafa/original.png'
+  },
+  {
+    id: 6,
+    nome: 'Skol',
+    descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
+    preco: 11.90,
+    categoria: 'cervejas-garrafa',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-garrafa/skol.png'
+  },
+
+  // CERVEJAS LATA
+  {
+    id: 7,
+    nome: 'Heineken',
+    descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
+    preco: 7.00,
+    categoria: 'cervejas-lata',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-lata/heineken.png'
+  },
+  {
+    id: 8,
+    nome: 'Heineken 0.0',
+    descricao: 'Todo o sabor de Heineken, sem álcool.',
+    preco: 7.00,
+    categoria: 'cervejas-lata',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-lata/heineken-zero.png'
+  },
+  {
+    id: 9,
+    nome: 'Amstel',
+    descricao: 'Cerveja puro malte, equilibrada e de sabor suave.',
+    preco: 5.00,
+    categoria: 'cervejas-lata',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-lata/amstel.png'
+  },
+  {
+    id: 10,
+    nome: 'Antarctica',
+    descricao: 'Cerveja clássica, leve e refrescante, ideal para bons momentos.',
+    preco: 5.00,
+    categoria: 'cervejas-lata',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-lata/antartica.png'
+  },
+  {
+    id: 11,
+    nome: 'Antarctica Original',
+    descricao: 'Cerveja tradicional, de sabor encorpado e amargor equilibrado.',
+    preco: 6.00,
+    categoria: 'cervejas-lata',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-lata/original.png'
+  },
+  {
+    id: 12,
+    nome: 'Skol',
+    descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
+    preco: 5.00,
+    categoria: 'cervejas-lata',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-lata/skol.png'
+  },
+
+  // CERVEJAS LONG NECK
+  {
+    id: 13,
+    nome: 'Heineken',
+    descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
+    preco: 10.00,
+    categoria: 'cervejas-long-neck',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-long-neck/heineken.png'
+  },
+  {
+    id: 14,
+    nome: 'Heineken 0.0',
+    descricao: 'Todo o sabor de Heineken, sem álcool.',
+    preco: 10.00,
+    categoria: 'cervejas-long-neck',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-long-neck/heineken-zero.png'
+  },
+  {
+    id: 15,
+    nome: 'Corona Extra',
+    descricao: 'Cerveja leve, suave e refrescante.',
+    preco: 10.00,
+    categoria: 'cervejas-long-neck',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-long-neck/corona-extra.png'
+  },
+  {
+    id: 16,
+    nome: 'Ice',
+    descricao: 'Bebida leve e refrescante, perfeita para qualquer ocasião.',
+    preco: 13.00,
+    categoria: 'cervejas-long-neck',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-long-neck/ICE.png'
+  },
+  {
+    id: 17,
+    nome: 'Império Ultra',
+    descricao: 'Cerveja leve, refrescante e com baixo teor de carboidratos.',
+    preco: 10.00,
+    categoria: 'cervejas-long-neck',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-long-neck/imperio.png'
+  },
+  {
+    id: 18,
+    nome: 'Michelob Ultra',
+    descricao: 'Cerveja premium, leve e de sabor suave.',
+    preco: 10.00,
+    categoria: 'cervejas-long-neck',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-long-neck/michelob.png'
+  },
+
+  // CHOPP
+  {
+    id: 19,
+    nome: 'Chopp Brahma',
+    descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
+    preco: 9.90,
+    categoria: 'chopp',
+    destaque: false,
+    imagem: './assets/cervejas/cervejas-lata/chopp.png'
+  },
+
+  // PETISCOS
+  {
+    id: 20,
+    nome: 'Almôndegas com mandioca',
+    descricao: 'Almôndegas suculentas acompanhadas de mandioca macia e saborosa.',
+    preco: 35.00,
+    categoria: 'petiscos',
+    destaque: false,
+    selo: 'MAIS PEDIDO',
+    imagem: './assets/petiscos/almondegasmandioca.jpg'
+  },
+  {
+    id: 21,
+    nome: 'Abacaxi com pinga e limão',
+    descricao: 'Abacaxi refrescante com o toque marcante da pinga e do limão.',
+    preco: 18.00,
+    categoria: 'petiscos',
+    destaque: false,
+    selo: 'FAVORITO',
+    imagem: './assets/petiscos/abacaxipinga.jpg'
+  },
+  {
+    id: 22,
+    nome: 'Batata frita tradicional',
+    descricao: 'Batatas douradinhas, crocantes por fora e macias por dentro.',
+    preco: 33.00,
+    adicional: { nome: 'Maionese', preco: 3.00 },
+    categoria: 'petiscos',
+    destaque: true,
+    selo: 'CROCANTE',
+    imagem: './assets/petiscos/batatatradicional.jpg'
+  },
+  {
+    id: 23,
+    nome: 'Batata frita arena',
+    descricao: 'Nossa batata frita especial, preparada com muito sabor para compartilhar.',
+    preco: 38.00,
+    categoria: 'petiscos',
+    adicional: { nome: 'Maionese', preco: 3.00 },
+    destaque: false,
+    selo: 'CROCANTE',
+    imagem: './assets/petiscos/batataarena.jpg'
+  },
+  {
+    id: 24,
+    nome: 'Bolinho de carne seca',
+    descricao: 'Bolinhos dourados e crocantes com recheio saboroso de carne seca.',
+    preco: 35.00,
+    categoria: 'petiscos',
+    adicional: { nome: 'Maionese', preco: 3.00 },
+    destaque: false,
+    selo: 'CROCANTE',
+    imagem: './assets/petiscos/bolinhocarneseca.jpg'
+  },
+  {
+    id: 25,
+    nome: 'Frango a passarinho',
+    descricao: 'Pedaços de frango bem temperados, fritinhos e irresistivelmente crocantes.',
+    preco: 39.00,
+    categoria: 'petiscos',
+    destaque: true,
+    selo: 'CROCANTE',
+    imagem: './assets/petiscos/frangopassarinho.png'
+  },
+  {
+    id: 26,
+    nome: 'Fígado acebolado',
+    descricao: 'Fígado macio e bem temperado, acompanhado de cebolas refogadas.',
+    preco: 28.00,
+    categoria: 'petiscos',
+    destaque: false,
+    selo: 'SABOROSO',
+    imagem: './assets/petiscos/figadoacebolado.jpg'
+  },
+  {
+    id: 27,
+    nome: 'Fígado acebolado com jiló',
+    descricao: 'Fígado suculento com cebolas refogadas e o sabor especial do jiló.',
+    preco: 35.00,
+    categoria: 'petiscos',
+    destaque: false,
+    selo: 'ESPECIAL',
+    imagem: './assets/petiscos/figadoaceboladojilo.jpg'
+  },
+  {
+    id: 28,
+    nome: 'Filé tilápia',
+    descricao: 'Filés de tilápia douradinhos, macios por dentro e crocantes por fora.',
+    preco: 49.90,
+    categoria: 'petiscos',
+    destaque: true,
+    selo: 'CROCANTE',
+    imagem: './assets/petiscos/filetilapia.jpg'
+  },
+  {
+    id: 29,
+    nome: 'Pastelzinho carne e queijo',
+    descricao: 'Pastéis crocantes com recheio delicioso de carne e queijo derretido.',
+    preco: 40.00,
+    adicional: { nome: 'Maionese', preco: 3.00 },
+    categoria: 'petiscos',
+    destaque: false,
+    selo: 'CROCANTE',
+    imagem: './assets/petiscos/pastelzinhocarnequeijo.jpg'
+  },
+  {
+    id: 30,
+    nome: 'Salada de jiló',
+    descricao: 'Jiló temperadinho, combinado com ingredientes frescos e muito sabor.',
+    preco: 23.00,
+    categoria: 'petiscos',
+    destaque: false,
+    selo: 'REFRESCANTE',
+    imagem: './assets/petiscos/saladadejilo.jpg'
+  },
+  {
+    id: 31,
+    nome: 'Tábua de frios',
+    descricao: 'Uma seleção especial de frios e queijos, perfeita para compartilhar.',
+    preco: 68.00,
+    categoria: 'petiscos',
+    destaque: true,
+    selo: 'PARA COMPARTILHAR',
+    imagem: './assets/petiscos/tabuadefrios.jpg'
+  },
+  {
+    id: 32,
+    nome: 'Tomate tira gosto',
+    descricao: 'Tomates fresquinhos e bem temperados, um tira-gosto leve e saboroso.',
+    preco: 18.00,
+    categoria: 'petiscos',
+    destaque: false,
+    selo: 'REFRESCANTE',
+    imagem: './assets/petiscos/tomatetiragosto.jpg'
+  },
+
+  // CHAPA QUENTE
+  {
+    id: 33,
+    nome: 'Chapa quente picanha',
+    descricao: 'Picanha suculenta e bem temperada, servida na chapa quente, com sabor irresistível.',
+    preco: 95.00,
+    categoria: 'chapa',
+    destaque: true,
+    imagem: 'assets/chapa/picanhachapa.jpg'
+  },
+  {
+    id: 34,
+    nome: 'Chapa quente contra filé',
+    descricao: 'Contra filé macio e suculento, preparado na chapa quente e servido no ponto certo.',
+    preco: 78.00,
+    categoria: 'chapa',
+    destaque: false,
+    imagem: 'assets/chapa/contrafilechapa.jpg'
+  },
+
+  // GUARNIÇÕES
+  {
+    id: 35,
+    nome: 'Arroz branco',
+    descricao: 'Arroz branquinho, soltinho e fresquinho, perfeito para acompanhar sua refeição.',
+    preco: 12.00,
+    categoria: 'guarnicoes',
+    destaque: false,
+    imagem: 'assets/chapa/arroz.jpg'
+  },
+  {
+    id: 36,
+    nome: 'Feijão tropeiro',
+    descricao: 'Feijão tropeiro bem temperado, com farofa e aquele sabor especial da comida caseira.',
+    preco: 23.00,
+    categoria: 'guarnicoes',
+    destaque: false,
+    imagem: 'assets/chapa/feijao.jpg'
+  },
+  {
+    id: 37,
+    nome: 'Mandioca cozida',
+    descricao: 'Mandioca cozida no ponto certo, macia e saborosa, ideal para acompanhar qualquer prato.',
+    preco: 10.00,
+    categoria: 'guarnicoes',
+    destaque: false,
+    imagem: 'assets/chapa/mandioca.jpg'
+  },
+  {
+    id: 38,
+    nome: 'Vinagrete',
+    descricao: 'Combinação refrescante de tomate, cebola e temperos frescos.',
+    preco: 12.00,
+    categoria: 'guarnicoes',
+    destaque: false,
+    imagem: 'assets/chapa/vinagrete.jpg'
+  },
+
+  // JANTINHAS
+  {
+    id: 39,
+    nome: 'Jantinha completa',
+    descricao: 'Uma refeição caprichada com arroz, feijão, espetinho suculento e salada fresquinha.',
+    preco: 28.00,
+    categoria: 'janta',
+    destaque: true,
+    imagem: 'assets/chapa/jantinha.jpg'
+  },
+  {
+    id: 40,
+    nome: 'Espeto simples',
+    descricao: 'Espetinho bem temperado, assado na brasa e cheio de sabor.',
+    preco: 10.00,
+    categoria: 'janta',
+    destaque: false,
+    imagem: 'assets/chapa/espetosimples.jpg'
+  },
+  {
+    id: 41,
+    nome: 'Espeto com mandioca',
+    descricao: 'Espetinho de carne suculento acompanhado de mandioca macia e saborosa.',
+    preco: 13.00,
+    categoria: 'janta',
+    destaque: false,
+    imagem: 'assets/chapa/espetomandioca.png'
+  },
+
+  // DRINKS
+  {
+    id: 42,
+    nome: 'Arena 43',
+    descricao: 'Drink especial com Licor 43, sabor suave, adocicado e refrescante.',
+    preco: 39.00,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/arena.jpg'
+  },
+  {
+    id: 43,
+    nome: 'Aperol Spritz',
+    descricao: 'Combinação refrescante de Aperol, espumante e água com gás, finalizada com laranja.',
+    preco: 25.00,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/aperolspritz.jpg'
+  },
+  {
+    id: 44,
+    nome: 'Caipifruta Limão Taiti',
+    descricao: 'Drink refrescante com limão-taiti, gelo e um toque cítrico irresistível.',
+    preco: 21.90,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/caipilimao.png'
+  },
+  {
+    id: 45,
+    nome: 'Caipifruta Morango e Maracujá',
+    descricao: 'Combinação tropical de morango e maracujá, com sabor frutado e refrescante.',
+    preco: 21.90,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/caipifrutamorangomaracuja.jpg'
+  },
+  {
+    id: 46,
+    nome: 'Cozumel',
+    descricao: 'Drink refrescante com cerveja, limão e borda de sal, perfeito para quem gosta de sabores cítricos.',
+    preco: 15.00,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/cozumel.jpg'
+  },
+  {
+    id: 47,
+    nome: 'Moscow Mule',
+    descricao: 'Drink clássico com vodka, limão e gengibre, servido bem gelado.',
+    preco: 25.00,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/moscow.jpg'
+  },
+  {
+    id: 48,
+    nome: 'Preparo de Cozumel',
+    descricao: 'Preparo especial com limão e sal, ideal para transformar sua cerveja em um delicioso Cozumel.',
+    preco: 6.00,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/preparo.png'
+  },
+  {
+    id: 49,
+    nome: 'Tropical Gin',
+    descricao: 'Gin combinado com notas cítricas e ingredientes refrescantes, perfeito para qualquer ocasião.',
+    preco: 28.00,
+    categoria: 'drinks',
+    destaque: false,
+    imagem: './assets/drinks/tropicalgin.jpg'
+  },
+
+  // SHOTS
+  {
+    id: 50,
+    nome: 'Shot Arena',
+    descricao: 'Dose especial da casa, com sabor marcante e um toque exclusivo do Arena.',
+    preco: 15.00,
+    categoria: 'shot',
+    destaque: false,
+    imagem: './assets/drinks/shotarena.jpg'
+  },
+
+  // DOSES
+  {
+    id: 51,
+    nome: 'Ballena',
+    descricao: 'Vodka de sabor suave e marcante, ideal para apreciar bem gelada.',
+    preco: 15.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/ballena.jpg'
+  },
+  {
+    id: 52,
+    nome: 'Campari',
+    descricao: 'Aperitivo italiano de sabor intenso e levemente amargo, com notas de ervas e frutas.',
+    preco: 13.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/campari.jpg'
+  },
+  {
+    id: 53,
+    nome: 'Cabaré',
+    descricao: 'Cachaça de sabor marcante e aroma especial, perfeita para apreciar em uma boa dose.',
+    preco: 10.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/cabare.jpg'
+  },
+  {
+    id: 54,
+    nome: 'Chivas',
+    descricao: 'Whisky escocês de 12 anos, com sabor suave, encorpado e notas de mel e frutas.',
+    preco: 18.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/chivas.jpg'
+  },
+  {
+    id: 55,
+    nome: 'Jose Cuervo',
+    descricao: 'Tequila mexicana de sabor marcante, com notas suaves de agave.',
+    preco: 16.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/josecuervo.jpg'
+  },
+  {
+    id: 56,
+    nome: 'Licor 43',
+    descricao: 'Licor espanhol de sabor doce e suave, com notas de baunilha e especiarias.',
+    preco: 16.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/licor43.jpg'
+  },
+  {
+    id: 57,
+    nome: 'Old Parr',
+    descricao: 'Whisky escocês de 12 anos, encorpado e equilibrado, com notas amadeiradas.',
+    preco: 18.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/oldparr.jpg'
+  },
+  {
+    id: 58,
+    nome: 'Smirnoff',
+    descricao: 'Vodka clássica de sabor suave e equilibrado, perfeita para apreciar gelada.',
+    preco: 12.00,
+    categoria: 'dose',
+    destaque: false,
+    imagem: './assets/doses/smirnoff.jpg'
+  },
+
+
+  // BEBIDAS SEM ÁLCOOL
+  {
+    id: 59,
+    nome: 'Água Mineral com Gás',
+    descricao: 'Água mineral gaseificada, leve e refrescante. Servida gelada.',
+    preco: 5.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/agua-com-gas.png'
+  },
+  {
+    id: 60,
+    nome: 'Água Mineral sem Gás',
+    descricao: 'Água mineral natural, ideal para hidratar e refrescar.',
+    preco: 4.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/agua-sem-gas.png'
+  },
+  {
+    id: 61,
+    nome: 'Água Tônica',
+    descricao: 'Bebida gaseificada com sabor levemente amargo e refrescante.',
+    preco: 8.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/agua-tonica.png'
+  },
+  {
+    id: 62,
+    nome: 'Coca-Cola',
+    descricao: 'Refrigerante Coca-Cola original, servido bem gelado em lata.',
+    preco: 6.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/coca-cola.png'
+  },
+  {
+    id: 63,
+    nome: 'Coca-Cola Zero',
+    descricao: 'Todo o sabor de Coca-Cola, sem açúcar. Servida gelada em lata.',
+    preco: 6.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/coca-cola-zero.png'
+  },
+  {
+    id: 64,
+    nome: 'Energético Red Bull',
+    descricao: 'Energético Red Bull tradicional, servido gelado em lata.',
+    preco: 15.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/red-bull.png'
+  },
+  {
+    id: 65,
+    nome: 'Extra Power',
+    descricao: 'Bebida energética de sabor marcante, ideal para dar mais disposição.',
+    preco: 10.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/extra-power.png'
+  },
+  {
+    id: 66,
+    nome: 'Fanta Laranja',
+    descricao: 'Refrigerante sabor laranja, doce, gaseificado e refrescante.',
+    preco: 6.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/fanta-laranja.png'
+  },
+  {
+    id: 67,
+    nome: 'Gatorade',
+    descricao: 'Bebida isotônica que ajuda na reposição de líquidos e eletrólitos.',
+    preco: 10.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/gatorade.png'
+  },
+  {
+    id: 68,
+    nome: 'Guaraná Antarctica',
+    descricao: 'Refrigerante brasileiro com o sabor tradicional do guaraná.',
+    preco: 6.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/guarana-antartica.png'
+  },
+  {
+    id: 69,
+    nome: 'H2O Tradicional',
+    descricao: 'Bebida gaseificada com sabor suave de limão, leve e refrescante.',
+    preco: 7.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/h2o-tradicional.png'
+  },
+  {
+    id: 70,
+    nome: 'H2O Limoneto',
+    descricao: 'Bebida gaseificada com sabor cítrico de limão, ideal para refrescar.',
+    preco: 7.00,
+    categoria: 'bebidas',
+    destaque: false,
+    imagem: './assets/bebidas/h2o-limoneto.png'
+  },
+
 ];

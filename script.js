@@ -19,9 +19,15 @@ function renderProductCard(product) {
       ${product.selo ? `<span class="product-badge">${escapeHTML(product.selo)}</span>` : ''}
     </div>
     <div class="product-info">
-      <div class="product-top"><span class="product-category">${escapeHTML(category?.nome || '')}</span></div>
       <h3>${escapeHTML(product.nome)}</h3>
       <p>${escapeHTML(product.descricao)}</p>
+      ${product.adicional ? `<details class="product-additionals">
+        <summary>Adicionais</summary>
+        <div class="product-additional">
+          <span>${escapeHTML(product.adicional.nome)}</span>
+          <strong>${money(product.adicional.preco)}</strong>
+        </div>
+      </details>` : ''}
       <div class="product-bottom"><strong>${money(product.preco)}</strong></div>
     </div>
   </article>`;
