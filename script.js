@@ -111,7 +111,7 @@ function renderBanners() {
     timer = window.setInterval(() => {
       if (reducedMotion.matches || document.hidden || mouseOver || swipeStart || carousel.contains(document.activeElement)) return;
       showBanner(currentBanner + 1);
-    }, 3000);
+    }, 4000);
   }
 
   let swipeStart = null;
