@@ -206,7 +206,7 @@ const produtos = [
     categoria: 'petiscos',
     destaque: false,
     selo: 'MAIS PEDIDO',
-    imagem: './assets/petiscos/almondegasmandioca.jpg'
+    imagem: './assets/petiscos/almondegasmandioca.png'
   },
   {
     id: 21,
@@ -269,7 +269,7 @@ const produtos = [
     categoria: 'petiscos',
     destaque: false,
     selo: 'SABOROSO',
-    imagem: './assets/petiscos/figadoacebolado.jpg'
+    imagem: './assets/petiscos/figadoacebolado.png'
   },
   {
     id: 27,
@@ -279,7 +279,7 @@ const produtos = [
     categoria: 'petiscos',
     destaque: false,
     selo: 'ESPECIAL',
-    imagem: './assets/petiscos/figadoaceboladojilo.jpg'
+    imagem: './assets/petiscos/figadoaceboladojilo.png'
   },
   {
     id: 28,
@@ -310,7 +310,7 @@ const produtos = [
     categoria: 'petiscos',
     destaque: false,
     selo: 'REFRESCANTE',
-    imagem: './assets/petiscos/saladadejilo.jpg'
+    imagem: './assets/petiscos/saladadejilo.png'
   },
   {
     id: 31,
