@@ -12,7 +12,7 @@ const banners = [
     titulo: '',
     destaque: '',
     descricao: '',
-    exibirContagem: false,
+    exibirContagem: true,
   },
   {
     imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRgEjBEJANA2Y8s8YfGbxJFy9jjoYvZtd2Ggctog2sNgidNPDX4BrHQN4&s=10',
