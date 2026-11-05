@@ -338,7 +338,7 @@ const produtos = [
     id: 33,
     nome: 'Picanha na chapa',
     descricao: 'Picanha suculenta e bem temperada, servida na chapa quente, com sabor irresistível.',
-    preco: 95.00,
+    preco: 99.00,
     categoria: 'chapa',
     selo: 'DELICIOSO',
     destaque: true,
