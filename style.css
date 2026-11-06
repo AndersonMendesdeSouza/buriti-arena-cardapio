@@ -200,6 +200,7 @@ a:focus-visible, button:focus-visible, .product-grid:focus-visible {
 .results-count { color: var(--muted); font-size: 12px; white-space: nowrap; }
 .carousel-hint { display: none; }
 .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.ios-product-track { display: contents; }
 .product-card {
   min-width: 0;
   display: flex;
@@ -392,6 +393,16 @@ footer {
     scrollbar-color: #cfd8d2 transparent;
   }
   .product-card { scroll-snap-align: start; scroll-snap-stop: always; }
+  .product-grid--ios { display: block; overflow: hidden; overflow: clip; scroll-snap-type: none; touch-action: pan-y pinch-zoom; }
+  .product-grid--ios .ios-product-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    gap: 40px;
+    transition: transform .48s cubic-bezier(.25, .1, .25, 1);
+  }
+  .product-grid--ios .ios-product-track--dragging { transition: none; }
+  .ios-carousels--zoomed .product-grid--ios { touch-action: auto; }
   .product-grid::-webkit-scrollbar { height: 4px; }
   .product-grid::-webkit-scrollbar-thumb { background: #cfd8d2; border-radius: 4px; }
   .product-grid::-webkit-scrollbar-track { background: transparent; }
@@ -403,5 +414,6 @@ footer {
   html { scroll-behavior: auto; }
   .topbar, .welcome-copy, .welcome-photo { animation: none; }
   .insta-link, .search-wrap, .product-card, .banner-track, .menu-controls { transition: none; }
+  .product-grid--ios .ios-product-track { transition: none; }
   .product-card:hover { transform: none; }
 }

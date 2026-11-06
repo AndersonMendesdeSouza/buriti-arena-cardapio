@@ -2,6 +2,8 @@ const $ = (selector) => document.querySelector(selector);
 const productsNode = $('#products');
 const categoriesNode = $('#categories');
 const search = $('#search');
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent)
+  || (navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
 let currentCategory = 'todos';
 const money = (n) => n.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
 const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -310,7 +312,161 @@ function renderProductCard(product) {
   </article>`;
 }
 
+function setupIOSProductCarousels() {
+  if (!isIOS) return null;
+
+  const mobile = window.matchMedia('(max-width: 620px)');
+  let swipe = null;
+  let viewportWidth = document.documentElement.clientWidth;
+
+  function showCard(grid, index, animate = true) {
+    const track = grid.querySelector('.ios-product-track');
+    const cards = track.children;
+    const step = cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
+    index = Math.max(0, Math.min(index, cards.length - 1));
+    grid.dataset.cardIndex = String(index);
+    track.classList.toggle('ios-product-track--dragging', !animate);
+    track.style.transform = `translate3d(${-index * step}px, 0, 0)`;
+    if (!animate) {
+      void track.offsetWidth;
+      track.classList.remove('ios-product-track--dragging');
+    }
+  }
+
+  function cancelSwipe() {
+    if (!swipe) return;
+
+    const currentSwipe = swipe;
+    swipe = null;
+    if (currentSwipe.horizontal) showCard(currentSwipe.grid, currentSwipe.index);
+  }
+
+  function updateZoom() {
+    const zoomed = window.visualViewport && window.visualViewport.scale > 1.01;
+    productsNode.classList.toggle('ios-carousels--zoomed', Boolean(zoomed));
+    if (zoomed) cancelSwipe();
+  }
+
+  // Os eventos ficam no container para continuar funcionando após buscar ou filtrar.
+  productsNode.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1) {
+      cancelSwipe();
+      return;
+    }
+    if (!mobile.matches || productsNode.classList.contains('ios-carousels--zoomed')) return;
+
+    const grid = event.target.closest('.product-grid--ios');
+    if (!grid) return;
+
+    cancelSwipe();
+    const touch = event.touches[0];
+    const track = grid.querySelector('.ios-product-track');
+    const cards = track.children;
+    const step = cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
+    swipe = { grid, track, step, touchId: touch.identifier, x: touch.clientX, y: touch.clientY,
+      index: Number(grid.dataset.cardIndex), trackX: 0, horizontal: false };
+  }, { passive: true });
+
+  productsNode.addEventListener('touchmove', (event) => {
+    if (event.touches.length !== 1) {
+      cancelSwipe();
+      return;
+    }
+    const touch = event.touches[0];
+    if (!swipe || touch.identifier !== swipe.touchId) return;
+
+    const distanceX = touch.clientX - swipe.x;
+    const distanceY = touch.clientY - swipe.y;
+    if (!swipe.horizontal) {
+      if (Math.max(Math.abs(distanceX), Math.abs(distanceY)) < 8) return;
+      if (Math.abs(distanceX) <= Math.abs(distanceY) * 1.25) {
+        cancelSwipe();
+        return;
+      }
+      if (!event.cancelable) {
+        cancelSwipe();
+        return;
+      }
+
+      // Interrompe a transição na posição atual, sem pular para o destino.
+      swipe.trackX = new DOMMatrixReadOnly(window.getComputedStyle(swipe.track).transform).m41;
+      swipe.index = Math.max(0, Math.min(Math.round(-swipe.trackX / swipe.step), swipe.track.children.length - 1));
+      swipe.horizontal = true;
+      swipe.track.classList.add('ios-product-track--dragging');
+    }
+    if (!event.cancelable) {
+      cancelSwipe();
+      return;
+    }
+    event.preventDefault();
+
+    // Reserva parte do percurso para a transição suave ao soltar o dedo.
+    const preview = Math.max(-swipe.step * 0.6, Math.min(distanceX * 0.65, swipe.step * 0.6));
+    const minX = -Math.min(swipe.index + 1, swipe.track.children.length - 1) * swipe.step;
+    const maxX = -Math.max(0, swipe.index - 1) * swipe.step;
+    const position = Math.max(minX, Math.min(swipe.trackX + preview, maxX));
+    swipe.track.style.transform = `translate3d(${position}px, 0, 0)`;
+  }, { passive: false });
+
+  productsNode.addEventListener('touchend', (event) => {
+    if (!swipe) return;
+    const touch = Array.from(event.changedTouches).find(touch => touch.identifier === swipe.touchId);
+    if (!touch) return;
+
+    const currentSwipe = swipe;
+    swipe = null;
+    if (!currentSwipe.horizontal) return;
+
+    const distanceX = touch.clientX - currentSwipe.x;
+    const threshold = Math.min(50, currentSwipe.step * 0.12);
+    let index = currentSwipe.index;
+    if (Math.abs(distanceX) >= threshold) index += distanceX < 0 ? 1 : -1;
+    showCard(currentSwipe.grid, index);
+  }, { passive: true });
+  productsNode.addEventListener('touchcancel', cancelSwipe, { passive: true });
+
+  productsNode.addEventListener('keydown', (event) => {
+    if (!mobile.matches || !event.target.matches('.product-grid--ios')) return;
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+
+    event.preventDefault();
+    cancelSwipe();
+    const grid = event.target;
+    let index = Number(grid.dataset.cardIndex);
+    if (event.key === 'ArrowLeft') index--;
+    if (event.key === 'ArrowRight') index++;
+    if (event.key === 'Home') index = 0;
+    if (event.key === 'End') index = grid.querySelector('.ios-product-track').children.length - 1;
+    showCard(grid, index);
+  });
+  productsNode.addEventListener('focusin', (event) => {
+    if (!mobile.matches) return;
+    const card = event.target.closest('.product-card');
+    const grid = event.target.closest('.product-grid--ios');
+    if (!card || !grid) return;
+
+    cancelSwipe();
+    grid.scrollLeft = 0;
+    const index = Array.from(grid.querySelector('.ios-product-track').children).indexOf(card);
+    if (index !== Number(grid.dataset.cardIndex)) showCard(grid, index);
+  });
+  window.addEventListener('blur', cancelSwipe);
+  window.addEventListener('resize', () => {
+    if (document.documentElement.clientWidth === viewportWidth) return;
+    viewportWidth = document.documentElement.clientWidth;
+    cancelSwipe();
+    if (!mobile.matches) return;
+    productsNode.querySelectorAll('.product-grid--ios').forEach(grid => {
+      showCard(grid, Number(grid.dataset.cardIndex), false);
+    });
+  });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', updateZoom);
+  updateZoom();
+  return cancelSwipe;
+}
+
 function renderProducts() {
+  cancelIOSProductSwipe?.();
   const query = normalize(search.value.trim());
   const filtered = produtos.filter(product => {
     const matchesSearch = normalize(`${product.nome} ${product.descricao}`).includes(query);
@@ -340,6 +496,7 @@ function renderProducts() {
     const titleId = `title-${category.id}`;
     const hintId = `hint-${category.id}`;
     const hasMultipleProducts = sectionProducts.length > 1;
+    const useIOSCarousel = isIOS && hasMultipleProducts;
 
     sectionsHTML += `<section class="product-section" data-category="${escapeHTML(category.id)}" aria-labelledby="${titleId}">
       <div class="category-heading">
@@ -347,9 +504,12 @@ function renderProducts() {
         <span class="results-count">${sectionProducts.length} ${sectionProducts.length === 1 ? 'item' : 'itens'}</span>
       </div>
       ${hasMultipleProducts ? `<p class="carousel-hint" id="${hintId}">Deslize para explorar os produtos</p>` : ''}
-      <div class="product-grid" role="region" aria-labelledby="${titleId}"
+      <div class="product-grid${useIOSCarousel ? ' product-grid--ios' : ''}" role="region" aria-labelledby="${titleId}"
+        ${useIOSCarousel ? 'data-card-index="0"' : ''}
         ${hasMultipleProducts ? `aria-describedby="${hintId}"` : ''} tabindex="0">
+        ${useIOSCarousel ? '<div class="ios-product-track">' : ''}
         ${sectionProducts.map(renderProductCard).join('')}
+        ${useIOSCarousel ? '</div>' : ''}
       </div>
     </section>`;
   }
@@ -371,5 +531,6 @@ categoriesNode.addEventListener('click', (e) => {
 });
 search.addEventListener('input', renderProducts);
 $('#reset-filters').addEventListener('click', () => {currentCategory='todos';search.value='';renderCategories();renderProducts();search.focus();});
+const cancelIOSProductSwipe = setupIOSProductCarousels();
 renderBanners(); renderCategories(); renderProducts();
 setupMenuControls();
