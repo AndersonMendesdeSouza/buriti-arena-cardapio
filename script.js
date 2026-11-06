@@ -1,3 +1,28 @@
+async function registrarAcesso() {
+  let visitorId = localStorage.getItem('arena_visitor_id');
+
+  // Gera um ID apenas na primeira visita
+  if (!visitorId) {
+    visitorId = crypto.randomUUID();
+    localStorage.setItem('arena_visitor_id', visitorId);
+  }
+
+  try {
+    await fetch(`${API_URL}/access`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ visitorId }),
+    });
+  } catch (error) {
+    console.error('Erro ao registrar acesso:', error);
+  }
+}
+
+// Executa ao carregar o cardápio
+registrarAcesso();
+
 const $ = (selector) => document.querySelector(selector);
 const productsNode = $('#products');
 const categoriesNode = $('#categories');
@@ -5,9 +30,9 @@ const search = $('#search');
 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent)
   || (navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
 let currentCategory = 'todos';
-const money = (n) => n.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
-const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-const escapeHTML = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const escapeHTML = (s) => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 function renderBanners() {
   const carousel = $('#banner-carousel');
@@ -16,11 +41,11 @@ function renderBanners() {
 
   carousel.innerHTML = `<div class="banner-viewport"><div class="banner-track">
     ${visibleBanners.map((banner, index) => {
-      const hasText = [banner.chamada, banner.titulo, banner.destaque, banner.descricao]
-        .some(text => typeof text === 'string' && text.trim() !== '');
-      const headingTag = index === 0 ? 'h1' : 'h2';
+    const hasText = [banner.chamada, banner.titulo, banner.destaque, banner.descricao]
+      .some(text => typeof text === 'string' && text.trim() !== '');
+    const headingTag = index === 0 ? 'h1' : 'h2';
 
-      return `<div class="section-head ${hasText ? 'section-head--with-text' : 'section-head--image-only'} ${banner.imagemDesktop ? 'section-head--responsive-image' : ''}"
+    return `<div class="section-head ${hasText ? 'section-head--with-text' : 'section-head--image-only'} ${banner.imagemDesktop ? 'section-head--responsive-image' : ''}"
         role="group" aria-label="Banner ${index + 1} de ${visibleBanners.length}" aria-hidden="${index !== 0}">
         <picture>
           ${banner.imagemDesktop ? `<source media="(min-width: 621px)" srcset="${escapeHTML(banner.imagemDesktop)}" />` : ''}
@@ -38,7 +63,7 @@ function renderBanners() {
         </div>` : ''}
         ${hasText && banner.exibirContagem ? `<div class="menu-count"><strong>${String(produtos.length).padStart(2, '0')}</strong><span>opções no cardápio</span></div>` : ''}
       </div>`;
-    }).join('')}
+  }).join('')}
   </div></div>`;
 
   if (visibleBanners.length < 2) return;
@@ -285,7 +310,7 @@ function setupMenuControls() {
   updatePosition();
 }
 
-function renderCategories(){
+function renderCategories() {
   categoriesNode.innerHTML = categorias.map(cat => `<button class="category-chip ${cat.id === currentCategory ? 'active' : ''}" data-category="${cat.id}" aria-pressed="${cat.id === currentCategory}"><span>${cat.icone}</span>${escapeHTML(cat.nome)}</button>`).join('');
 }
 function renderProductCard(product) {
@@ -363,8 +388,10 @@ function setupIOSProductCarousels() {
     const track = grid.querySelector('.ios-product-track');
     const cards = track.children;
     const step = cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
-    swipe = { grid, track, step, touchId: touch.identifier, x: touch.clientX, y: touch.clientY,
-      index: Number(grid.dataset.cardIndex), trackX: 0, horizontal: false };
+    swipe = {
+      grid, track, step, touchId: touch.identifier, x: touch.clientX, y: touch.clientY,
+      index: Number(grid.dataset.cardIndex), trackX: 0, horizontal: false
+    };
   }, { passive: true });
 
   productsNode.addEventListener('touchmove', (event) => {
@@ -530,7 +557,7 @@ categoriesNode.addEventListener('click', (e) => {
   renderCategories(); renderProducts();
 });
 search.addEventListener('input', renderProducts);
-$('#reset-filters').addEventListener('click', () => {currentCategory='todos';search.value='';renderCategories();renderProducts();search.focus();});
+$('#reset-filters').addEventListener('click', () => { currentCategory = 'todos'; search.value = ''; renderCategories(); renderProducts(); search.focus(); });
 const cancelIOSProductSwipe = setupIOSProductCarousels();
 renderBanners(); renderCategories(); renderProducts();
 setupMenuControls();

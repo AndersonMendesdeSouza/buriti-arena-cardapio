@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acessos | Buriti Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .access-page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+
+    .access-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .access-heading h1 { margin-bottom: 4px; font-size: clamp(24px, 4vw, 32px); }
+    .access-heading p, .access-summary p { margin-bottom: 0; color: var(--muted); }
+    .access-heading button:disabled { cursor: wait; opacity: .65; }
+
+    .access-summary, .access-list {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+    }
+
+    .access-summary { margin-bottom: 24px; }
+    .access-summary h2 { margin-bottom: 8px; font-size: 16px; font-weight: 500; }
+    .access-total { display: block; color: var(--green); font-size: 48px; line-height: 1.2; }
+    .access-summary p { margin-top: 12px; font-size: 13px; }
+    .access-list h2 { margin-bottom: 16px; font-size: 20px; }
+    .access-status { color: var(--muted); }
+    .access-status:empty { display: none; }
+    .access-status--error { color: #a32d2d; }
+    .access-table-wrap { overflow-x: auto; }
+    .access-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .access-table th, .access-table td { padding: 14px 12px; border-bottom: 1px solid var(--border); }
+    .access-table th { color: var(--muted); font-size: 13px; font-weight: 500; }
+    .access-table td:first-child { overflow-wrap: anywhere; }
+    .access-table td:last-child { white-space: nowrap; }
+    .access-table tbody tr:last-child td { border-bottom: 0; }
+
+    @media (max-width: 620px) {
+      .access-page { padding: 24px 16px; }
+      .access-summary, .access-list { padding: 20px 16px; }
+      .access-table th, .access-table td { padding: 12px 8px; font-size: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <a href="index.html" class="brand" aria-label="Abrir cardápio Buriti Arena">
+      <img src="logo.png" alt="Logo Buriti Arena">
+      <span><strong>Buriti Arena</strong><small>Acessos ao cardápio</small></span>
+    </a>
+    <a href="index.html" class="insta-link">Ver cardápio</a>
+  </header>
+
+  <main class="access-page">
+    <div class="access-heading">
+      <div>
+        <h1>Acessos ao cardápio</h1>
+        <p>Acompanhe os visitantes registrados.</p>
+      </div>
+      <button type="button" class="insta-link" id="refresh-access">Atualizar</button>
+    </div>
+
+    <section class="access-summary" aria-labelledby="total-heading">
+      <h2 id="total-heading">Total de visitantes registrados</h2>
+      <strong class="access-total" id="access-total">—</strong>
+      <p>O mesmo navegador é contado uma vez enquanto seu identificador estiver salvo.</p>
+    </section>
+
+    <section class="access-list" aria-labelledby="list-heading" id="access-list" aria-busy="true">
+      <h2 id="list-heading">Visitantes</h2>
+      <p class="access-status" id="access-status" role="status">Carregando acessos…</p>
+      <div class="access-table-wrap" id="access-table-wrap" hidden>
+        <table class="access-table" aria-labelledby="list-heading">
+          <thead>
+            <tr>
+              <th scope="col">Identificador do visitante</th>
+              <th scope="col">Registrado em</th>
+            </tr>
+          </thead>
+          <tbody id="access-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script>
+    const totalNode = document.querySelector('#access-total');
+    const listNode = document.querySelector('#access-list');
+    const statusNode = document.querySelector('#access-status');
+    const tableWrap = document.querySelector('#access-table-wrap');
+    const rowsNode = document.querySelector('#access-rows');
+    const refreshButton = document.querySelector('#refresh-access');
+    const dateFormatter = new Intl.DateTimeFormat('pt-BR', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    });
+
+    async function carregarAcessos() {
+      refreshButton.disabled = true;
+      listNode.setAttribute('aria-busy', 'true');
+      statusNode.classList.remove('access-status--error');
+      statusNode.textContent = 'Carregando acessos…';
+      tableWrap.hidden = true;
+      totalNode.textContent = '—';
+      rowsNode.replaceChildren();
+
+      try {
+        const [countResponse, listResponse] = await Promise.all([
+          fetch(`${API_URL}/access/count`, { cache: 'no-store' }),
+          fetch(`${API_URL}/access`, { cache: 'no-store' }),
+        ]);
+
+        if (!countResponse.ok || !listResponse.ok) {
+          throw new Error('Falha ao consultar os acessos na API.');
+        }
+
+        const [count, accesses] = await Promise.all([
+          countResponse.json(),
+          listResponse.json(),
+        ]);
+
+        if (!Number.isInteger(count?.total) || count.total < 0 || !Array.isArray(accesses)) {
+          throw new Error('A API retornou dados de acessos em um formato inesperado.');
+        }
+
+        const rows = document.createDocumentFragment();
+
+        for (const access of accesses) {
+          const row = document.createElement('tr');
+          const visitorCell = document.createElement('td');
+          const dateCell = document.createElement('td');
+          const createdAt = new Date(access.createdAt);
+
+          visitorCell.textContent = access.visitorId || 'Não informado';
+          dateCell.textContent = Number.isNaN(createdAt.getTime())
+            ? 'Data indisponível'
+            : dateFormatter.format(createdAt);
+
+          row.append(visitorCell, dateCell);
+          rows.append(row);
+        }
+
+        rowsNode.append(rows);
+        totalNode.textContent = count.total.toLocaleString('pt-BR');
+        tableWrap.hidden = accesses.length === 0;
+        statusNode.textContent = accesses.length === 0
+          ? 'Nenhum visitante registrado ainda.'
+          : `${count.total.toLocaleString('pt-BR')} visitante(s) registrado(s).`;
+      } catch (error) {
+        statusNode.classList.add('access-status--error');
+        statusNode.textContent = 'Não foi possível carregar os acessos. Verifique se a API está disponível e clique em Atualizar.';
+        console.error('Erro ao carregar acessos:', error);
+      } finally {
+        refreshButton.disabled = false;
+        listNode.setAttribute('aria-busy', 'false');
+      }
+    }
+
+    refreshButton.addEventListener('click', carregarAcessos);
+    carregarAcessos();
+  </script>
+</body>
+
+</html>
