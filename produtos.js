@@ -21,7 +21,7 @@ const categorias = [
 const produtos = [
   {
     id: 1,
-    nome: 'Heineken',
+    nome: 'Heineken 600 ml',
     descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
     preco: 14.90,
     categoria: 'cervejas-garrafa',
@@ -30,7 +30,7 @@ const produtos = [
   },
   {
     id: 2,
-    nome: 'Amstel',
+    nome: 'Amstel 600 ml',
     descricao: 'Cerveja puro malte, equilibrada e de sabor suave.',
     preco: 11.90,
     categoria: 'cervejas-garrafa',
@@ -39,7 +39,7 @@ const produtos = [
   },
   {
     id: 3,
-    nome: 'Corona Extra',
+    nome: 'Corona Extra 600 ml',
     descricao: 'Cerveja leve, suave e refrescante, com sabor delicado.',
     preco: 15.90,
     categoria: 'cervejas-garrafa',
@@ -48,7 +48,7 @@ const produtos = [
   },
   {
     id: 4,
-    nome: 'Antarctica',
+    nome: 'Antarctica 600 ml',
     descricao: 'Cerveja clássica, leve e refrescante, ideal para bons momentos.',
     preco: 11.90,
     categoria: 'cervejas-garrafa',
@@ -57,7 +57,7 @@ const produtos = [
   },
   {
     id: 5,
-    nome: 'Antarctica Original',
+    nome: 'Antarctica Original 600 ml',
     descricao: 'Cerveja tradicional, de sabor encorpado e amargor equilibrado.',
     preco: 13.90,
     categoria: 'cervejas-garrafa',
@@ -66,7 +66,7 @@ const produtos = [
   },
   {
     id: 6,
-    nome: 'Skol',
+    nome: 'Skol 600 ml',
     descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
     preco: 11.90,
     categoria: 'cervejas-garrafa',
@@ -77,7 +77,7 @@ const produtos = [
   // CERVEJAS LATA
   {
     id: 7,
-    nome: 'Heineken',
+    nome: 'Heineken 269 ml',
     descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
     preco: 7.00,
     categoria: 'cervejas-lata',
@@ -86,7 +86,7 @@ const produtos = [
   },
   {
     id: 8,
-    nome: 'Heineken 0.0',
+    nome: 'Heineken 0.0 269 ml',
     descricao: 'Todo o sabor de Heineken, sem álcool.',
     preco: 7.00,
     categoria: 'cervejas-lata',
@@ -95,7 +95,7 @@ const produtos = [
   },
   {
     id: 9,
-    nome: 'Amstel',
+    nome: 'Amstel 269 ml',
     descricao: 'Cerveja puro malte, equilibrada e de sabor suave.',
     preco: 5.00,
     categoria: 'cervejas-lata',
@@ -104,7 +104,7 @@ const produtos = [
   },
   {
     id: 10,
-    nome: 'Antarctica',
+    nome: 'Antarctica 269 ml',
     descricao: 'Cerveja clássica, leve e refrescante, ideal para bons momentos.',
     preco: 5.00,
     categoria: 'cervejas-lata',
@@ -113,7 +113,7 @@ const produtos = [
   },
   {
     id: 11,
-    nome: 'Antarctica Original',
+    nome: 'Antarctica Original 269 ml',
     descricao: 'Cerveja tradicional, de sabor encorpado e amargor equilibrado.',
     preco: 6.00,
     categoria: 'cervejas-lata',
@@ -122,7 +122,7 @@ const produtos = [
   },
   {
     id: 12,
-    nome: 'Skol',
+    nome: 'Skol 269 ml',
     descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
     preco: 5.00,
     categoria: 'cervejas-lata',
@@ -133,7 +133,7 @@ const produtos = [
   // CERVEJAS LONG NECK
   {
     id: 13,
-    nome: 'Heineken',
+    nome: 'Heineken 330 ml',
     descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
     preco: 10.00,
     categoria: 'cervejas-long-neck',
@@ -142,7 +142,7 @@ const produtos = [
   },
   {
     id: 14,
-    nome: 'Heineken 0.0',
+    nome: 'Heineken 0.0 330 ml',
     descricao: 'Todo o sabor de Heineken, sem álcool.',
     preco: 10.00,
     categoria: 'cervejas-long-neck',
@@ -151,7 +151,7 @@ const produtos = [
   },
   {
     id: 15,
-    nome: 'Corona Extra',
+    nome: 'Corona Extra 330 ml',
     descricao: 'Cerveja leve, suave e refrescante.',
     preco: 10.00,
     categoria: 'cervejas-long-neck',
@@ -160,7 +160,7 @@ const produtos = [
   },
   {
     id: 16,
-    nome: 'Ice',
+    nome: 'Ice 330 ml',
     descricao: 'Bebida leve e refrescante, perfeita para qualquer ocasião.',
     preco: 13.00,
     categoria: 'cervejas-long-neck',
@@ -169,7 +169,7 @@ const produtos = [
   },
   {
     id: 17,
-    nome: 'Império Ultra',
+    nome: 'Império Ultra 330 ml',
     descricao: 'Cerveja leve, refrescante e com baixo teor de carboidratos.',
     preco: 10.00,
     categoria: 'cervejas-long-neck',
@@ -178,7 +178,7 @@ const produtos = [
   },
   {
     id: 18,
-    nome: 'Michelob Ultra',
+    nome: 'Michelob Ultra 330 ml',
     descricao: 'Cerveja premium, leve e de sabor suave.',
     preco: 10.00,
     categoria: 'cervejas-long-neck',
