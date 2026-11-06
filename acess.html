@@ -10,6 +10,16 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+    .access-header { flex-wrap: wrap; }
+
+    .access-button {
+      width: auto;
+      flex-shrink: 0;
+      padding: 10px 16px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
     .access-page {
       max-width: 1000px;
       margin: 0 auto;
@@ -61,12 +71,12 @@
 </head>
 
 <body>
-  <header class="topbar">
+  <header class="topbar access-header">
     <a href="index.html" class="brand" aria-label="Abrir cardápio Buriti Arena">
       <img src="logo.png" alt="Logo Buriti Arena">
       <span><strong>Buriti Arena</strong><small>Acessos ao cardápio</small></span>
     </a>
-    <a href="index.html" class="insta-link">Ver cardápio</a>
+    <a href="index.html" class="insta-link access-button">Ver cardápio</a>
   </header>
 
   <main class="access-page">
@@ -75,7 +85,7 @@
         <h1>Acessos ao cardápio</h1>
         <p>Acompanhe os visitantes registrados.</p>
       </div>
-      <button type="button" class="insta-link" id="refresh-access">Atualizar</button>
+      <button type="button" class="insta-link access-button" id="refresh-access">Atualizar</button>
     </div>
 
     <section class="access-summary" aria-labelledby="total-heading">
