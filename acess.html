@@ -39,17 +39,83 @@
     .access-heading p, .access-summary p { margin-bottom: 0; color: var(--muted); }
     .access-heading button:disabled { cursor: wait; opacity: .65; }
 
-    .access-summary, .access-list {
+    .access-overview {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      grid-template-areas:
+        "summary calendar"
+        "visitors calendar";
+      grid-template-rows: auto 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+      align-items: start;
+    }
+
+    .access-summary { grid-area: summary; }
+    .access-calendar { grid-area: calendar; }
+    .access-list { grid-area: visitors; min-width: 0; }
+
+    .access-summary, .access-calendar, .access-list {
       padding: 24px;
       border: 1px solid var(--border);
       border-radius: 20px;
       background: #fff;
     }
 
-    .access-summary { margin-bottom: 24px; }
     .access-summary h2 { margin-bottom: 8px; font-size: 16px; font-weight: 500; }
     .access-total { display: block; color: var(--green); font-size: 48px; line-height: 1.2; }
     .access-summary p { margin-top: 12px; font-size: 13px; }
+    .access-summary .access-period { color: var(--green); font-weight: 500; }
+
+    .access-calendar { padding: 20px; }
+    .access-calendar h2 { margin-bottom: 2px; font-size: 16px; }
+    .calendar-description { margin-bottom: 16px; color: var(--muted); font-size: 12px; }
+    .calendar-controls { min-width: 0; margin: 0; padding: 0; border: 0; }
+    .calendar-navigation { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+    .calendar-month { font-size: 14px; font-weight: 600; text-transform: capitalize; }
+    .calendar-arrow {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--dark);
+    }
+    .calendar-arrow svg { width: 16px; height: 16px; }
+    .calendar-weekdays, .calendar-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+    .calendar-weekdays { margin-bottom: 6px; color: var(--muted); text-align: center; font-size: 11px; }
+    .calendar-day {
+      position: relative;
+      min-width: 0;
+      height: 36px;
+      padding: 0 0 3px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--dark);
+      font-size: 13px;
+    }
+    .calendar-day[aria-current="date"] { border-color: var(--green); }
+    .calendar-arrow:hover:not(:disabled), .calendar-day:hover:not(:disabled) { background: var(--green-soft); }
+    .calendar-arrow:disabled, .calendar-day:disabled { color: #b6bcb8; cursor: default; }
+    .calendar-day[aria-pressed="true"] { background: var(--green); color: #fff; font-weight: 600; }
+    .calendar-day[data-has-visits]::after, .calendar-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .calendar-day[data-has-visits]::after { content: ''; position: absolute; bottom: 4px; left: calc(50% - 2px); }
+    .calendar-day[aria-pressed="true"]::after { background: #fff; }
+    .calendar-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+    .calendar-legend { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; }
+    .calendar-clear { padding: 6px 8px; border: 0; border-radius: 8px; background: var(--green-soft); color: var(--green); font-size: 12px; font-weight: 500; }
+    .calendar-controls:disabled { opacity: .55; }
+    .calendar-controls:disabled button { cursor: default; }
+
     .access-list h2 { margin-bottom: 16px; font-size: 20px; }
     .access-status { color: var(--muted); }
     .access-status:empty { display: none; }
@@ -61,9 +127,18 @@
     .access-table td:first-child { overflow-wrap: anywhere; }
     .access-table td:last-child { white-space: nowrap; }
     .access-table tbody tr:last-child td { border-bottom: 0; }
+    .access-show-all { margin-top: 16px; }
+    .access-show-all[hidden] { display: none; }
 
     @media (max-width: 620px) {
       .access-page { padding: 24px 16px; }
+      .access-overview {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "summary" "calendar" "visitors";
+        grid-template-rows: auto;
+        gap: 16px;
+      }
+      .access-calendar { width: 100%; max-width: 360px; justify-self: center; }
       .access-summary, .access-list { padding: 20px 16px; }
       .access-table th, .access-table td { padding: 12px 8px; font-size: 13px; }
     }
@@ -88,27 +163,55 @@
       <button type="button" class="insta-link access-button" id="refresh-access">Atualizar</button>
     </div>
 
-    <section class="access-summary" aria-labelledby="total-heading">
-      <h2 id="total-heading">Total de visitantes registrados</h2>
-      <strong class="access-total" id="access-total">—</strong>
-      <p>O mesmo navegador é contado uma vez enquanto seu identificador estiver salvo.</p>
-    </section>
+    <div class="access-overview">
+      <section class="access-summary" aria-labelledby="total-heading">
+        <h2 id="total-heading">Total de visitantes registrados</h2>
+        <strong class="access-total" id="access-total">—</strong>
+        <p class="access-period" id="access-period">Todos os dias</p>
+        <p>O mesmo navegador é contado uma vez enquanto seu identificador estiver salvo.</p>
+      </section>
 
-    <section class="access-list" aria-labelledby="list-heading" id="access-list" aria-busy="true">
-      <h2 id="list-heading">Visitantes</h2>
-      <p class="access-status" id="access-status" role="status">Carregando acessos…</p>
-      <div class="access-table-wrap" id="access-table-wrap" hidden>
-        <table class="access-table" aria-labelledby="list-heading">
-          <thead>
-            <tr>
-              <th scope="col">Identificador do visitante</th>
-              <th scope="col">Registrado em</th>
-            </tr>
-          </thead>
-          <tbody id="access-rows"></tbody>
-        </table>
-      </div>
-    </section>
+      <section class="access-calendar" aria-labelledby="calendar-heading">
+        <h2 id="calendar-heading">Filtrar por dia</h2>
+        <p class="calendar-description">Veja os visitantes de uma data até hoje.</p>
+        <fieldset class="calendar-controls" id="calendar-controls" aria-label="Selecionar data de registro" disabled>
+          <div class="calendar-navigation">
+            <button type="button" class="calendar-arrow" id="previous-month" aria-label="Mês anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+            </button>
+            <span class="calendar-month" id="calendar-month" aria-live="polite"></span>
+            <button type="button" class="calendar-arrow" id="next-month" aria-label="Próximo mês">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+            </button>
+          </div>
+          <div class="calendar-weekdays" aria-hidden="true">
+            <span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span>
+          </div>
+          <div class="calendar-days" id="calendar-days" role="group" aria-labelledby="calendar-month"></div>
+          <div class="calendar-footer">
+            <span class="calendar-legend"><span class="calendar-dot" aria-hidden="true"></span>Com visitantes</span>
+            <button type="button" class="calendar-clear" id="clear-date" aria-pressed="true">Todos os dias</button>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="access-list" aria-labelledby="list-heading" id="access-list" aria-busy="true">
+        <h2 id="list-heading">Visitantes</h2>
+        <p class="access-status" id="access-status" role="status">Carregando acessos…</p>
+        <div class="access-table-wrap" id="access-table-wrap" hidden>
+          <table class="access-table" aria-labelledby="list-heading">
+            <thead>
+              <tr>
+                <th scope="col">Identificador do visitante</th>
+                <th scope="col">Registrado em</th>
+              </tr>
+            </thead>
+            <tbody id="access-rows"></tbody>
+          </table>
+        </div>
+        <button type="button" class="insta-link access-button access-show-all" id="show-all-access" aria-expanded="false" aria-controls="access-rows" hidden>Mostrar todos</button>
+      </section>
+    </div>
   </main>
 
   <script src="config.js"></script>
@@ -119,17 +222,131 @@
     const tableWrap = document.querySelector('#access-table-wrap');
     const rowsNode = document.querySelector('#access-rows');
     const refreshButton = document.querySelector('#refresh-access');
+    const showAllButton = document.querySelector('#show-all-access');
+    const totalHeading = document.querySelector('#total-heading');
+    const periodNode = document.querySelector('#access-period');
+    const calendarControls = document.querySelector('#calendar-controls');
+    const calendarMonth = document.querySelector('#calendar-month');
+    const calendarDays = document.querySelector('#calendar-days');
+    const clearDateButton = document.querySelector('#clear-date');
+    const timeZone = 'America/Sao_Paulo';
     const dateFormatter = new Intl.DateTimeFormat('pt-BR', {
       dateStyle: 'short',
       timeStyle: 'short',
+      timeZone,
     });
+    const dayKeyFormatter = new Intl.DateTimeFormat('en-CA', {
+      year: 'numeric', month: '2-digit', day: '2-digit', timeZone,
+    });
+    const monthFormatter = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' });
+    const fullDateFormatter = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'full' });
+    const todayKey = chaveData(new Date());
+    const [todayYear, todayMonth] = todayKey.split('-').map(Number);
+    let visibleMonth = new Date(todayYear, todayMonth - 1, 1);
+    let selectedDate = null;
+    let showAllVisitors = false;
+    let accesses = [];
+    let totalVisitors = 0;
+    let visitsByDay = new Map();
+
+    function chaveData(date) {
+      if (Number.isNaN(date.getTime())) return null;
+
+      const parts = dayKeyFormatter.formatToParts(date);
+      const year = parts.find(part => part.type === 'year').value;
+      const month = parts.find(part => part.type === 'month').value;
+      const day = parts.find(part => part.type === 'day').value;
+      return `${year}-${month}-${day}`;
+    }
+
+    function renderizarCalendario() {
+      const year = visibleMonth.getFullYear();
+      const month = visibleMonth.getMonth();
+      const firstWeekday = (visibleMonth.getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const days = document.createDocumentFragment();
+      calendarMonth.textContent = monthFormatter.format(visibleMonth);
+      document.querySelector('#next-month').disabled = year > todayYear
+        || (year === todayYear && month >= todayMonth - 1);
+
+      for (let index = 0; index < firstWeekday; index++) {
+        const blank = document.createElement('span');
+        blank.setAttribute('aria-hidden', 'true');
+        days.append(blank);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const count = visitsByDay.get(key) || 0;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'calendar-day';
+        button.textContent = day;
+        button.dataset.date = key;
+        button.disabled = key > todayKey;
+        button.setAttribute('aria-pressed', String(selectedDate === key));
+        button.setAttribute('aria-label', `${fullDateFormatter.format(date)}: ${button.disabled ? 'data futura' : `${count} visitante(s)`}`);
+        if (key === todayKey) button.setAttribute('aria-current', 'date');
+        if (count > 0) button.dataset.hasVisits = 'true';
+        days.append(button);
+      }
+
+      calendarDays.replaceChildren(days);
+      clearDateButton.setAttribute('aria-pressed', String(selectedDate === null));
+    }
+
+    function renderizarAcessos() {
+      const filteredAccesses = selectedDate
+        ? accesses.filter(access => chaveData(new Date(access.createdAt)) === selectedDate)
+        : accesses;
+      const visibleAccesses = showAllVisitors ? filteredAccesses : filteredAccesses.slice(0, 5);
+      const rows = document.createDocumentFragment();
+
+      for (const access of visibleAccesses) {
+        const row = document.createElement('tr');
+        const visitorCell = document.createElement('td');
+        const dateCell = document.createElement('td');
+        const createdAt = new Date(access.createdAt);
+
+        visitorCell.textContent = access.visitorId || 'Não informado';
+        dateCell.textContent = Number.isNaN(createdAt.getTime())
+          ? 'Data indisponível'
+          : dateFormatter.format(createdAt);
+
+        row.append(visitorCell, dateCell);
+        rows.append(row);
+      }
+
+      rowsNode.replaceChildren(rows);
+      const count = selectedDate ? filteredAccesses.length : totalVisitors;
+      totalNode.textContent = count.toLocaleString('pt-BR');
+      totalHeading.textContent = selectedDate ? 'Visitantes no dia selecionado' : 'Total de visitantes registrados';
+      periodNode.textContent = selectedDate
+        ? fullDateFormatter.format(new Date(`${selectedDate}T12:00:00`))
+        : 'Todos os dias';
+      tableWrap.hidden = filteredAccesses.length === 0;
+      showAllButton.hidden = filteredAccesses.length <= 5;
+      showAllButton.textContent = showAllVisitors ? 'Mostrar menos' : 'Mostrar todos';
+      showAllButton.setAttribute('aria-expanded', String(showAllVisitors));
+      if (filteredAccesses.length === 0) {
+        statusNode.textContent = selectedDate
+          ? 'Nenhum visitante registrado neste dia.'
+          : 'Nenhum visitante registrado ainda.';
+      } else {
+        statusNode.textContent = `${count.toLocaleString('pt-BR')} visitante(s) registrado(s)${selectedDate ? ' neste dia' : ''}.`;
+      }
+    }
 
     async function carregarAcessos() {
       refreshButton.disabled = true;
+      calendarControls.disabled = true;
       listNode.setAttribute('aria-busy', 'true');
       statusNode.classList.remove('access-status--error');
       statusNode.textContent = 'Carregando acessos…';
       tableWrap.hidden = true;
+      showAllButton.hidden = true;
+      showAllVisitors = false;
       totalNode.textContent = '—';
       rowsNode.replaceChildren();
 
@@ -143,38 +360,26 @@
           throw new Error('Falha ao consultar os acessos na API.');
         }
 
-        const [count, accesses] = await Promise.all([
+        const [count, accessList] = await Promise.all([
           countResponse.json(),
           listResponse.json(),
         ]);
 
-        if (!Number.isInteger(count?.total) || count.total < 0 || !Array.isArray(accesses)) {
+        if (!Number.isInteger(count?.total) || count.total < 0 || !Array.isArray(accessList)) {
           throw new Error('A API retornou dados de acessos em um formato inesperado.');
         }
 
-        const rows = document.createDocumentFragment();
-
+        accesses = accessList;
+        totalVisitors = count.total;
+        visitsByDay = new Map();
         for (const access of accesses) {
-          const row = document.createElement('tr');
-          const visitorCell = document.createElement('td');
-          const dateCell = document.createElement('td');
-          const createdAt = new Date(access.createdAt);
-
-          visitorCell.textContent = access.visitorId || 'Não informado';
-          dateCell.textContent = Number.isNaN(createdAt.getTime())
-            ? 'Data indisponível'
-            : dateFormatter.format(createdAt);
-
-          row.append(visitorCell, dateCell);
-          rows.append(row);
+          const key = chaveData(new Date(access.createdAt));
+          if (key) visitsByDay.set(key, (visitsByDay.get(key) || 0) + 1);
         }
 
-        rowsNode.append(rows);
-        totalNode.textContent = count.total.toLocaleString('pt-BR');
-        tableWrap.hidden = accesses.length === 0;
-        statusNode.textContent = accesses.length === 0
-          ? 'Nenhum visitante registrado ainda.'
-          : `${count.total.toLocaleString('pt-BR')} visitante(s) registrado(s).`;
+        renderizarCalendario();
+        renderizarAcessos();
+        calendarControls.disabled = false;
       } catch (error) {
         statusNode.classList.add('access-status--error');
         statusNode.textContent = 'Não foi possível carregar os acessos. Verifique se a API está disponível e clique em Atualizar.';
@@ -185,7 +390,41 @@
       }
     }
 
+    document.querySelector('#previous-month').addEventListener('click', () => {
+      visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
+      renderizarCalendario();
+    });
+    document.querySelector('#next-month').addEventListener('click', () => {
+      visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
+      renderizarCalendario();
+    });
+    calendarDays.addEventListener('click', event => {
+      const button = event.target.closest('button[data-date]');
+      if (!button || button.disabled || calendarControls.disabled) return;
+
+      selectedDate = button.dataset.date;
+      showAllVisitors = false;
+      renderizarCalendario();
+      renderizarAcessos();
+      calendarDays.querySelector(`[data-date="${selectedDate}"]`).focus();
+    });
+    clearDateButton.addEventListener('click', () => {
+      selectedDate = null;
+      showAllVisitors = false;
+      renderizarCalendario();
+      renderizarAcessos();
+    });
+    showAllButton.addEventListener('click', () => {
+      showAllVisitors = !showAllVisitors;
+      renderizarAcessos();
+      const firstNewRow = rowsNode.children[5];
+      if (firstNewRow) {
+        firstNewRow.setAttribute('tabindex', '-1');
+        firstNewRow.focus();
+      }
+    });
     refreshButton.addEventListener('click', carregarAcessos);
+    renderizarCalendario();
     carregarAcessos();
   </script>
 </body>
