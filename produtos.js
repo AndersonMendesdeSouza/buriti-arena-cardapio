@@ -407,7 +407,7 @@ const produtos = [
     id: 40,
     nome: 'Espeto simples',
     descricao: 'Espetinho bem temperado, assado na brasa e cheio de sabor.',
-    preco: 10.00,
+    preco: 12.00,
     categoria: 'janta',
     destaque: false,
     imagem: 'assets/chapa/espetosimples.jpg'
@@ -416,7 +416,7 @@ const produtos = [
     id: 41,
     nome: 'Espeto com mandioca',
     descricao: 'Espetinho de carne suculento acompanhado de mandioca macia e saborosa.',
-    preco: 13.00,
+    preco: 14.00,
     categoria: 'janta',
     destaque: false,
     imagem: 'assets/chapa/espetomandioca.png'
@@ -481,7 +481,7 @@ const produtos = [
     id: 48,
     nome: 'Preparo de Cozumel',
     descricao: 'Preparo especial com limão e sal, ideal para transformar sua cerveja em um delicioso Cozumel.',
-    preco: 6.00,
+    preco: 8.00,
     categoria: 'drinks',
     destaque: false,
     imagem: './assets/drinks/preparo.png'
