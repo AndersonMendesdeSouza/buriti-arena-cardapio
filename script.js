@@ -289,7 +289,7 @@ function renderProducts() {
         <h2 id="${titleId}">${escapeHTML(category.nome)}</h2>
         <span class="results-count">${sectionProducts.length} ${sectionProducts.length === 1 ? 'item' : 'itens'}</span>
       </div>
-      ${hasMultipleProducts ? `<p class="carousel-hint" id="${hintId}">Deslize para explorar os produtos <span aria-hidden="true">↔</span></p>` : ''}
+      ${hasMultipleProducts ? `<p class="carousel-hint" id="${hintId}">Deslize para explorar os produtos</p>` : ''}
       <div class="product-grid" role="region" aria-labelledby="${titleId}"
         ${hasMultipleProducts ? `aria-describedby="${hintId}"` : ''} tabindex="0">
         ${sectionProducts.map(renderProductCard).join('')}
