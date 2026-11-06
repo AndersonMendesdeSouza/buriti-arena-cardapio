@@ -226,6 +226,63 @@ function renderBanners() {
   restartTimer();
 }
 
+function setupMenuControls() {
+  const controls = $('.menu-controls');
+  const banner = $('#banner-carousel');
+  let previousY = Math.max(0, window.scrollY);
+  let scrollDistance = 0;
+  let stickyStart = 0;
+  let framePending = false;
+
+  function showControls() {
+    controls.classList.remove('menu-controls--hidden');
+    scrollDistance = 0;
+  }
+
+  function updatePosition() {
+    // Usa a largura útil da tela para não criar rolagem horizontal junto à barra do navegador.
+    controls.style.setProperty('--controls-width', `${document.documentElement.clientWidth}px`);
+    const styles = window.getComputedStyle(controls);
+    stickyStart = banner.getBoundingClientRect().bottom + window.scrollY
+      + parseFloat(styles.marginTop) - parseFloat(styles.top);
+    previousY = Math.max(0, window.scrollY);
+    scrollDistance = 0;
+    if (previousY <= stickyStart) showControls();
+  }
+
+  function updateVisibility() {
+    framePending = false;
+    // Limita os valores para o efeito elástico do Safari não inverter a direção.
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const currentY = Math.max(0, Math.min(window.scrollY, maxScroll));
+    const difference = currentY - previousY;
+    previousY = currentY;
+
+    if (currentY <= stickyStart || document.activeElement === search) {
+      showControls();
+      return;
+    }
+    if (difference === 0) return;
+    if (Math.sign(difference) !== Math.sign(scrollDistance)) scrollDistance = 0;
+    scrollDistance += difference;
+    if (Math.abs(scrollDistance) < 12) return;
+
+    controls.classList.toggle('menu-controls--hidden', scrollDistance > 0);
+    scrollDistance = 0;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (framePending) return;
+    framePending = true;
+    window.requestAnimationFrame(updateVisibility);
+  }, { passive: true });
+  // Revela os controles também quando a pessoa chega neles pelo teclado.
+  controls.addEventListener('focusin', showControls);
+  window.addEventListener('resize', updatePosition);
+  window.addEventListener('load', updatePosition);
+  updatePosition();
+}
+
 function renderCategories(){
   categoriesNode.innerHTML = categorias.map(cat => `<button class="category-chip ${cat.id === currentCategory ? 'active' : ''}" data-category="${cat.id}" aria-pressed="${cat.id === currentCategory}"><span>${cat.icone}</span>${escapeHTML(cat.nome)}</button>`).join('');
 }
@@ -253,7 +310,146 @@ function renderProductCard(product) {
   </article>`;
 }
 
+function setupProductCarousels() {
+  const mobile = window.matchMedia('(max-width: 620px)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let swipe = null;
+  let animation = null;
+
+  function finishAnimation() {
+    if (!animation) return;
+
+    window.cancelAnimationFrame(animation.frameId);
+    animation.grid.scrollLeft = animation.target;
+    animation.grid.classList.remove('product-grid--dragging');
+    animation = null;
+  }
+
+  function resetSwipe() {
+    if (swipe) {
+      const currentSwipe = swipe;
+      swipe = null;
+      if (currentSwipe.horizontal) currentSwipe.grid.scrollLeft = currentSwipe.index * currentSwipe.step;
+      currentSwipe.grid.classList.remove('product-grid--dragging');
+      if (currentSwipe.grid.hasPointerCapture(currentSwipe.pointerId)) {
+        currentSwipe.grid.releasePointerCapture(currentSwipe.pointerId);
+      }
+    }
+    finishAnimation();
+  }
+
+  function updateTouchMode() {
+    const zoomed = window.visualViewport && window.visualViewport.scale > 1.01;
+    const enabled = 'PointerEvent' in window && mobile.matches && !zoomed;
+    productsNode.classList.toggle('product-sections--swipe', enabled);
+    if (!enabled) resetSwipe();
+  }
+
+  function showCard(grid, index, step) {
+    const start = grid.scrollLeft;
+    const target = Math.max(0, Math.min(index * step, grid.scrollWidth - grid.clientWidth));
+
+    if (reducedMotion.matches || Math.abs(target - start) < 1) {
+      grid.scrollLeft = target;
+      grid.classList.remove('product-grid--dragging');
+      return;
+    }
+
+    // O mesmo tempo de animação evita depender da inércia de cada navegador.
+    const startedAt = performance.now();
+    animation = { grid, target, frameId: null };
+    function animate(now) {
+      const progress = Math.max(0, Math.min(1, (now - startedAt) / 220));
+      const eased = 1 - Math.pow(1 - progress, 3);
+      grid.scrollLeft = start + (target - start) * eased;
+      if (progress < 1) {
+        animation.frameId = window.requestAnimationFrame(animate);
+      } else {
+        finishAnimation();
+      }
+    }
+    animation.frameId = window.requestAnimationFrame(animate);
+  }
+
+  // A delegação mantém os gestos funcionando após buscar ou trocar a categoria.
+  productsNode.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'touch') return;
+    if (!event.isPrimary) {
+      resetSwipe();
+      return;
+    }
+    if (!productsNode.classList.contains('product-sections--swipe')) return;
+
+    const grid = event.target.closest('.product-grid');
+    if (!grid || grid.children.length < 2 || grid.scrollWidth <= grid.clientWidth) return;
+
+    resetSwipe();
+    const cards = grid.children;
+    const step = cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
+    const index = Math.max(0, Math.min(Math.round(grid.scrollLeft / step), cards.length - 1));
+    swipe = { grid, index, step, pointerId: event.pointerId, x: event.clientX, y: event.clientY, horizontal: false };
+  });
+
+  productsNode.addEventListener('pointermove', (event) => {
+    if (!swipe || event.pointerId !== swipe.pointerId) return;
+
+    const distanceX = event.clientX - swipe.x;
+    const distanceY = event.clientY - swipe.y;
+    if (!swipe.horizontal) {
+      if (Math.max(Math.abs(distanceX), Math.abs(distanceY)) < 10) return;
+      // Pequenos desvios laterais não devem transformar a rolagem da página em um swipe.
+      if (Math.abs(distanceX) <= Math.abs(distanceY) * 1.25) {
+        resetSwipe();
+        return;
+      }
+      swipe.horizontal = true;
+      swipe.grid.classList.add('product-grid--dragging');
+      swipe.grid.setPointerCapture(event.pointerId);
+    }
+
+    const minLeft = Math.max(0, (swipe.index - 1) * swipe.step);
+    const maxLeft = Math.min((swipe.index + 1) * swipe.step, swipe.grid.scrollWidth - swipe.grid.clientWidth);
+    swipe.grid.scrollLeft = Math.max(minLeft, Math.min(swipe.index * swipe.step - distanceX, maxLeft));
+  });
+
+  productsNode.addEventListener('pointerup', (event) => {
+    if (!swipe || event.pointerId !== swipe.pointerId) return;
+
+    const currentSwipe = swipe;
+    swipe = null;
+    if (currentSwipe.grid.hasPointerCapture(event.pointerId)) currentSwipe.grid.releasePointerCapture(event.pointerId);
+    if (!currentSwipe.horizontal) return;
+
+    const distanceX = event.clientX - currentSwipe.x;
+    const threshold = Math.min(60, currentSwipe.step * 0.15);
+    let index = currentSwipe.index;
+    if (Math.abs(distanceX) >= threshold) index += distanceX < 0 ? 1 : -1;
+    index = Math.max(0, Math.min(index, currentSwipe.grid.children.length - 1));
+    showCard(currentSwipe.grid, index, currentSwipe.step);
+  });
+
+  productsNode.addEventListener('pointercancel', (event) => {
+    if (swipe && event.pointerId === swipe.pointerId) resetSwipe();
+  });
+  productsNode.addEventListener('lostpointercapture', (event) => {
+    if (swipe && event.pointerId === swipe.pointerId && event.target === swipe.grid) resetSwipe();
+  });
+  productsNode.addEventListener('keydown', resetSwipe);
+  productsNode.addEventListener('wheel', resetSwipe, { passive: true });
+  window.addEventListener('blur', resetSwipe);
+  window.addEventListener('resize', () => {
+    resetSwipe();
+    updateTouchMode();
+  });
+  mobile.addEventListener('change', updateTouchMode);
+  reducedMotion.addEventListener('change', finishAnimation);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', updateTouchMode);
+  updateTouchMode();
+  return resetSwipe;
+}
+
 function renderProducts() {
+  resetProductCarousels();
   const query = normalize(search.value.trim());
   const filtered = produtos.filter(product => {
     const matchesSearch = normalize(`${product.nome} ${product.descricao}`).includes(query);
@@ -314,4 +510,6 @@ categoriesNode.addEventListener('click', (e) => {
 });
 search.addEventListener('input', renderProducts);
 $('#reset-filters').addEventListener('click', () => {currentCategory='todos';search.value='';renderCategories();renderProducts();search.focus();});
+const resetProductCarousels = setupProductCarousels();
 renderBanners(); renderCategories(); renderProducts();
+setupMenuControls();
