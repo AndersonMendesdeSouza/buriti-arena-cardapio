@@ -391,8 +391,6 @@ footer {
     scrollbar-width: thin;
     scrollbar-color: #cfd8d2 transparent;
   }
-  .product-sections--swipe .product-grid { touch-action: pan-y pinch-zoom; }
-  .product-sections--swipe .product-grid--dragging { scroll-snap-type: none; }
   .product-card { scroll-snap-align: start; scroll-snap-stop: always; }
   .product-grid::-webkit-scrollbar { height: 4px; }
   .product-grid::-webkit-scrollbar-thumb { background: #cfd8d2; border-radius: 4px; }
