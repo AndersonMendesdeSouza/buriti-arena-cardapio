@@ -359,8 +359,8 @@ function setupProductCarousels() {
     const startedAt = performance.now();
     animation = { grid, target, frameId: null };
     function animate(now) {
-      const progress = Math.max(0, Math.min(1, (now - startedAt) / 220));
-      const eased = 1 - Math.pow(1 - progress, 3);
+      const progress = Math.max(0, Math.min(1, (now - startedAt) / 360));
+      const eased = 1 - Math.pow(1 - progress, 2);
       grid.scrollLeft = start + (target - start) * eased;
       if (progress < 1) {
         animation.frameId = window.requestAnimationFrame(animate);
