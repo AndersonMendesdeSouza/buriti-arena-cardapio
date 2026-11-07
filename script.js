@@ -325,12 +325,20 @@ function renderCategories() {
 }
 function renderProductCard(product) {
   const category = categorias.find(cat => cat.id === product.categoria);
+  const isPromotion = product.promocao === true
+    && Number.isFinite(product.precoPromocional)
+    && product.precoPromocional > 0
+    && product.precoPromocional < product.preco;
+  const price = isPromotion ? product.precoPromocional : product.preco;
 
-  return `<article class="product-card">
+  return `<article class="product-card${isPromotion ? ' product-card--promotion' : ''}">
     <div class="product-image">
       <img src="${escapeHTML(product.imagem)}" alt="${escapeHTML(product.nome)}" loading="lazy"
         onerror="this.style.display='none';this.parentElement.classList.add('image-fallback')" />
-      ${product.selo ? `<span class="product-badge">${escapeHTML(product.selo)}</span>` : ''}
+      ${isPromotion || product.selo ? `<div class="product-badges">
+        ${isPromotion ? '<span class="product-badge product-badge--promotion">Promoção</span>' : ''}
+        ${product.selo ? `<span class="product-badge">${escapeHTML(product.selo)}</span>` : ''}
+      </div>` : ''}
     </div>
     <div class="product-info">
       <h3>${escapeHTML(product.nome)}</h3>
@@ -342,7 +350,10 @@ function renderProductCard(product) {
           <strong>${money(product.adicional.preco)}</strong>
         </div>
       </details>` : ''}
-      <div class="product-bottom"><strong>${money(product.preco)}</strong></div>
+      <div class="product-bottom">
+        ${isPromotion ? `<del class="product-original-price" aria-label="Preço original: ${money(product.preco)}">${money(product.preco)}</del>` : ''}
+        <strong aria-label="${isPromotion ? 'Preço promocional' : 'Preço'}: ${money(price)}">${money(price)}</strong>
+      </div>
     </div>
   </article>`;
 }

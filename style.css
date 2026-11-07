@@ -96,7 +96,18 @@ a:focus-visible, button:focus-visible, .product-grid:focus-visible {
 .section-head--image-only { padding: 0; border-color: transparent; background: #140c04; }
 .section-head--image-only .welcome-photo { width: 100%; object-fit: contain; object-position: center; animation: none; }
 @media (min-width: 621px) {
-  .section-head--image-only.section-head--responsive-image .welcome-photo { object-fit: cover; object-position: left center; }
+  .section-head--image-only.section-head--responsive-image .welcome-photo { object-fit: contain; object-position: center; }
+  /* A proporção especial vale somente enquanto o banner de promoção está ativo. */
+  .banner-viewport:has(.section-head--image-only[aria-hidden="false"] source[srcset="assets/banners/promoweb.png"]) {
+    aspect-ratio: 3 / 1;
+  }
+  .banner-viewport:has(.section-head--image-only[aria-hidden="false"] source[srcset="assets/banners/promoweb.png"]) .banner-track {
+    height: 100%;
+  }
+  .banner-viewport:has(.section-head--image-only[aria-hidden="false"] source[srcset="assets/banners/promoweb.png"]) .section-head {
+    min-height: 0;
+    height: 100%;
+  }
 }
 .welcome-copy { position: relative; z-index: 1; max-width: 640px; animation: welcome-enter .65s .08s ease-out both; }
 .section-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #f0dfbd; margin-bottom: 12px; }
@@ -229,11 +240,19 @@ a:focus-visible, button:focus-visible, .product-grid:focus-visible {
   font-size: 20px;
   font-weight: 500;
 }
-.product-badge {
+.product-badges {
   position: absolute;
   left: 14px;
   top: 14px;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   max-width: calc(100% - 28px);
+}
+.product-badge {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   padding: 6px 10px;
   border-radius: 7px;
   background: #356f50;
@@ -282,6 +301,21 @@ a:focus-visible, button:focus-visible, .product-grid:focus-visible {
 .product-additional strong { flex: none; font-weight: 500; white-space: nowrap; }
 .product-bottom { border-top: 1px solid #12801255; padding-top: 14px; }
 .product-bottom strong { color: var(--dark); font-size: 20px; font-weight: 600; letter-spacing: -.4px; }
+.product-badge--promotion { background: #356f50; color: #fff; }
+.product-card--promotion .product-bottom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.product-original-price { color: var(--muted); font-size: 14px; }
+.product-card--promotion .product-bottom strong {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 8px;
+  background: var(--green-soft);
+  color: #356f50;
+}
 .product-grid:empty { display: none; }
 .empty-state { padding: 48px 16px; text-align: center; }
 .empty-state[hidden] { display: none; }

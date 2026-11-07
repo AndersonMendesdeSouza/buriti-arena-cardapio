@@ -24,8 +24,10 @@ const produtos = [
     nome: 'Heineken 600 ml',
     descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
     preco: 14.90,
+    precoPromocional: 13.90,
     categoria: 'cervejas-garrafa',
     destaque: false,
+    promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/heineken.png'
   },
   {
@@ -33,8 +35,10 @@ const produtos = [
     nome: 'Amstel 600 ml',
     descricao: 'Cerveja puro malte, equilibrada e de sabor suave.',
     preco: 11.90,
+    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
     destaque: false,
+    promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/amstel.png'
   },
   {
@@ -44,6 +48,7 @@ const produtos = [
     preco: 15.90,
     categoria: 'cervejas-garrafa',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-garrafa/corona.png'
   },
   {
@@ -51,8 +56,10 @@ const produtos = [
     nome: 'Antarctica 600 ml',
     descricao: 'Cerveja clássica, leve e refrescante, ideal para bons momentos.',
     preco: 11.90,
+    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
     destaque: false,
+    promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/antarctica.png'
   },
   {
@@ -62,6 +69,7 @@ const produtos = [
     preco: 13.90,
     categoria: 'cervejas-garrafa',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-garrafa/original.png'
   },
   {
@@ -69,8 +77,10 @@ const produtos = [
     nome: 'Skol 600 ml',
     descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
     preco: 11.90,
+    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
     destaque: false,
+    promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/skol.png'
   },
 
@@ -82,6 +92,7 @@ const produtos = [
     preco: 7.00,
     categoria: 'cervejas-lata',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-lata/heineken.png'
   },
   {
@@ -91,6 +102,7 @@ const produtos = [
     preco: 7.00,
     categoria: 'cervejas-lata',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-lata/heineken-zero.png'
   },
   {
@@ -100,6 +112,7 @@ const produtos = [
     preco: 5.00,
     categoria: 'cervejas-lata',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-lata/amstel.png'
   },
   {
@@ -109,6 +122,7 @@ const produtos = [
     preco: 5.00,
     categoria: 'cervejas-lata',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-lata/antartica.png'
   },
   {
@@ -118,6 +132,7 @@ const produtos = [
     preco: 6.00,
     categoria: 'cervejas-lata',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-lata/original.png'
   },
   {
@@ -127,6 +142,7 @@ const produtos = [
     preco: 5.00,
     categoria: 'cervejas-lata',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-lata/skol.png'
   },
 
@@ -138,6 +154,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'cervejas-long-neck',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-long-neck/heineken.png'
   },
   {
@@ -147,6 +164,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'cervejas-long-neck',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-long-neck/heineken-zero.png'
   },
   {
@@ -156,6 +174,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'cervejas-long-neck',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-long-neck/corona-extra.png'
   },
   {
@@ -165,6 +184,7 @@ const produtos = [
     preco: 13.00,
     categoria: 'cervejas-long-neck',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-long-neck/ICE.png'
   },
   {
@@ -174,6 +194,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'cervejas-long-neck',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-long-neck/imperio.png'
   },
   {
@@ -183,6 +204,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'cervejas-long-neck',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-long-neck/michelob.png'
   },
 
@@ -194,6 +216,7 @@ const produtos = [
     preco: 9.90,
     categoria: 'chopp',
     destaque: false,
+    promocao: false,
     imagem: './assets/cervejas/cervejas-lata/chopp.png'
   },
 
@@ -205,6 +228,7 @@ const produtos = [
     preco: 35.00,
     categoria: 'petiscos',
     destaque: false,
+    promocao: false,
     selo: 'MAIS PEDIDO',
     imagem: './assets/petiscos/almondegasmandioca.png'
   },
@@ -215,6 +239,7 @@ const produtos = [
     preco: 18.00,
     categoria: 'petiscos',
     destaque: false,
+    promocao: false,
     selo: 'FAVORITO',
     imagem: './assets/petiscos/abacaxipinga.png'
   },
@@ -226,6 +251,7 @@ const produtos = [
     adicional: { nome: 'Maionese', preco: 3.00 },
     categoria: 'petiscos',
     destaque: true,
+    promocao: false,
     selo: 'CROCANTE',
     imagem: './assets/petiscos/batatatradicional.png'
   },
@@ -237,6 +263,7 @@ const produtos = [
     categoria: 'petiscos',
     adicional: { nome: 'Maionese', preco: 3.00 },
     destaque: false,
+    promocao: false,
     selo: 'CROCANTE',
     imagem: './assets/petiscos/batataarena.jpg'
   },
@@ -248,6 +275,7 @@ const produtos = [
     categoria: 'petiscos',
     adicional: { nome: 'Maionese', preco: 3.00 },
     destaque: false,
+    promocao: false,
     selo: 'CROCANTE',
     imagem: './assets/petiscos/bolinhocarneseca.jpg'
   },
@@ -258,6 +286,7 @@ const produtos = [
     preco: 39.00,
     categoria: 'petiscos',
     destaque: true,
+    promocao: false,
     selo: 'ESPECIAL',
     imagem: './assets/petiscos/frangopassarinho.png'
   },
@@ -268,6 +297,7 @@ const produtos = [
     preco: 28.00,
     categoria: 'petiscos',
     destaque: false,
+    promocao: false,
     selo: 'SABOROSO',
     imagem: './assets/petiscos/figadoacebolado.png'
   },
@@ -278,6 +308,7 @@ const produtos = [
     preco: 35.00,
     categoria: 'petiscos',
     destaque: false,
+    promocao: false,
     selo: 'ESPECIAL',
     imagem: './assets/petiscos/figadoaceboladojilo.png'
   },
@@ -286,8 +317,10 @@ const produtos = [
     nome: 'Filé de tilápia',
     descricao: 'Filés de tilápia douradinhos, macios por dentro e crocantes por fora.',
     preco: 49.90,
+    precoPromocional: 44.90,
     categoria: 'petiscos',
     destaque: true,
+    promocao: true,
     selo: 'IRRESISTÍVEL',
     imagem: './assets/petiscos/filetilapia.jpg'
   },
@@ -299,6 +332,7 @@ const produtos = [
     adicional: { nome: 'Maionese', preco: 3.00 },
     categoria: 'petiscos',
     destaque: false,
+    promocao: false,
     selo: 'CROCANTE',
     imagem: './assets/petiscos/pastelzinhocarnequeijo.jpg'
   },
@@ -309,6 +343,7 @@ const produtos = [
     preco: 23.00,
     categoria: 'petiscos',
     destaque: false,
+    promocao: false,
     selo: 'REFRESCANTE',
     imagem: './assets/petiscos/saladadejilo.png'
   },
@@ -319,6 +354,7 @@ const produtos = [
     preco: 68.00,
     categoria: 'petiscos',
     destaque: true,
+    promocao: false,
     selo: 'PARA COMPARTILHAR',
     imagem: './assets/petiscos/tabuadefrios.jpg'
   },
@@ -329,6 +365,7 @@ const produtos = [
     preco: 18.00,
     categoria: 'petiscos',
     destaque: false,
+    promocao: false,
     selo: 'REFRESCANTE',
     imagem: './assets/petiscos/tomatetiragosto.jpg'
   },
@@ -342,6 +379,7 @@ const produtos = [
     categoria: 'chapa',
     selo: 'DELICIOSO',
     destaque: true,
+    promocao: false,
     imagem: 'assets/chapa/picanhachapa.jpg'
   },
   {
@@ -351,6 +389,7 @@ const produtos = [
     preco: 78.00,
     categoria: 'chapa',
     destaque: false,
+    promocao: false,
     imagem: 'assets/chapa/contrafilechapa.jpg'
   },
 
@@ -362,6 +401,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'guarnicoes',
     destaque: false,
+    promocao: false,
     imagem: 'assets/chapa/arroz.jpg'
   },
   {
@@ -371,6 +411,7 @@ const produtos = [
     preco: 23.00,
     categoria: 'guarnicoes',
     destaque: false,
+    promocao: false,
     imagem: 'assets/chapa/feijao.jpg'
   },
   {
@@ -380,6 +421,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'guarnicoes',
     destaque: false,
+    promocao: false,
     imagem: 'assets/chapa/mandioca.jpg'
   },
   {
@@ -389,6 +431,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'guarnicoes',
     destaque: false,
+    promocao: false,
     imagem: 'assets/chapa/vinagrete.jpg'
   },
 
@@ -398,8 +441,10 @@ const produtos = [
     nome: 'Jantinha completa',
     descricao: 'Uma refeição caprichada com arroz, feijão, espetinho suculento e salada fresquinha.',
     preco: 28.00,
+    precoPromocional: 24.99,
     categoria: 'janta',
     destaque: true,
+    promocao: true,
     selo: 'DESTAQUE',
     imagem: 'assets/chapa/jantinha.jpg'
   },
@@ -410,6 +455,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'janta',
     destaque: false,
+    promocao: false,
     imagem: 'assets/chapa/espetosimples.jpg'
   },
   {
@@ -419,6 +465,7 @@ const produtos = [
     preco: 14.00,
     categoria: 'janta',
     destaque: false,
+    promocao: false,
     imagem: 'assets/chapa/espetomandioca.png'
   },
 
@@ -430,6 +477,7 @@ const produtos = [
     preco: 39.00,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/arena.jpg'
   },
   {
@@ -439,6 +487,7 @@ const produtos = [
     preco: 25.00,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/aperolspritz.jpg'
   },
   {
@@ -448,6 +497,7 @@ const produtos = [
     preco: 21.90,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/caipilimao.png'
   },
   {
@@ -457,6 +507,7 @@ const produtos = [
     preco: 21.90,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/caipifrutamorangomaracuja.jpg'
   },
   {
@@ -466,6 +517,7 @@ const produtos = [
     preco: 15.00,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/cozumel.png'
   },
   {
@@ -475,6 +527,7 @@ const produtos = [
     preco: 25.00,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/moscow.png'
   },
   {
@@ -484,6 +537,7 @@ const produtos = [
     preco: 8.00,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/preparo.png'
   },
   {
@@ -493,6 +547,7 @@ const produtos = [
     preco: 28.00,
     categoria: 'drinks',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/tropicalgin.png'
   },
 
@@ -504,6 +559,7 @@ const produtos = [
     preco: 15.00,
     categoria: 'shot',
     destaque: false,
+    promocao: false,
     imagem: './assets/drinks/shotarena.jpg'
   },
 
@@ -515,6 +571,7 @@ const produtos = [
     preco: 15.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/ballena.png'
   },
   {
@@ -524,6 +581,7 @@ const produtos = [
     preco: 13.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/campari.png'
   },
   {
@@ -533,6 +591,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/cabare.png'
   },
   {
@@ -542,6 +601,7 @@ const produtos = [
     preco: 18.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/chivas.png'
   },
   {
@@ -551,6 +611,7 @@ const produtos = [
     preco: 16.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/josecuervo.jpg'
   },
   {
@@ -560,6 +621,7 @@ const produtos = [
     preco: 16.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/licor43.jpg'
   },
   {
@@ -569,6 +631,7 @@ const produtos = [
     preco: 18.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/oldparr.jpg'
   },
   {
@@ -578,6 +641,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'dose',
     destaque: false,
+    promocao: false,
     imagem: './assets/doses/smirnoff.jpg'
   },
 
@@ -590,6 +654,7 @@ const produtos = [
     preco: 5.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/agua-com-gas.png'
   },
   {
@@ -599,6 +664,7 @@ const produtos = [
     preco: 4.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/agua-sem-gas.png'
   },
   {
@@ -608,6 +674,7 @@ const produtos = [
     preco: 8.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/agua-tonica.png'
   },
   {
@@ -617,6 +684,7 @@ const produtos = [
     preco: 6.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/coca-cola.png'
   },
   {
@@ -626,6 +694,7 @@ const produtos = [
     preco: 6.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/coca-cola-zero.png'
   },
   {
@@ -635,6 +704,7 @@ const produtos = [
     preco: 15.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/red-bull.png'
   },
   {
@@ -644,6 +714,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/extra-power.png'
   },
   {
@@ -653,6 +724,7 @@ const produtos = [
     preco: 6.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/fanta-laranja.png'
   },
   {
@@ -662,6 +734,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/gatorade.png'
   },
   {
@@ -671,6 +744,7 @@ const produtos = [
     preco: 6.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/guarana-antartica.png'
   },
   {
@@ -680,6 +754,7 @@ const produtos = [
     preco: 7.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/h2o-tradicional.png'
   },
   {
@@ -689,6 +764,7 @@ const produtos = [
     preco: 7.00,
     categoria: 'bebidas',
     destaque: false,
+    promocao: false,
     imagem: './assets/bebidas/h2o-limoneto.png'
   },
 
@@ -700,6 +776,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'sucos',
     destaque: false,
+    promocao: false,
     imagem: './assets/sucos/suco-laranja.png'
   },
   {
@@ -709,6 +786,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'sucos',
     destaque: false,
+    promocao: false,
     imagem: './assets/sucos/suco-limao.png'
   },
   {
@@ -718,6 +796,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'sucos',
     destaque: false,
+    promocao: false,
     imagem: './assets/sucos/suco-maracuja.png'
   },
   {
@@ -727,6 +806,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'sucos',
     destaque: false,
+    promocao: false,
     imagem: './assets/sucos/suco-morango.png'
   },
   {
@@ -736,6 +816,7 @@ const produtos = [
     preco: 15.00,
     categoria: 'sucos',
     destaque: false,
+    promocao: false,
     imagem: './assets/sucos/doissabor.png'
   },
 
@@ -747,6 +828,7 @@ const produtos = [
     preco: 6.00,
     categoria: 'sucos',
     destaque: false,
+    promocao: false,
     imagem: './assets/sucos/del-valle-pessego.png'
   },
   {
@@ -756,6 +838,7 @@ const produtos = [
     preco: 6.00,
     categoria: 'sucos',
     destaque: false,
+    promocao: false,
     imagem: './assets/sucos/del-valle-uva.png'
   },
 
@@ -767,6 +850,7 @@ const produtos = [
     preco: 1.00,
     categoria: 'baladeiros',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/bubbaloo.png'
   },
   {
@@ -776,6 +860,7 @@ const produtos = [
     preco: 10.00,
     categoria: 'baladeiros',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/fini.png'
   },
   {
@@ -785,6 +870,7 @@ const produtos = [
     preco: 4.00,
     categoria: 'baladeiros',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/halls.png'
   },
   {
@@ -794,6 +880,7 @@ const produtos = [
     preco: 3.00,
     categoria: 'baladeiros',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/sonho-de-valsa.png'
   },
   {
@@ -803,6 +890,7 @@ const produtos = [
     preco: 5.00,
     categoria: 'baladeiros',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/trident.png'
   },
   {
@@ -812,6 +900,7 @@ const produtos = [
     preco: 7.00,
     categoria: 'baladeiros',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/snickers.png'
   },
   {
@@ -821,6 +910,7 @@ const produtos = [
     preco: 12.00,
     categoria: 'baladeiros',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/kinder-joy.png'
   },
 
@@ -832,6 +922,7 @@ const produtos = [
     preco: 18.00,
     categoria: 'sobremesas',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/creme-maracuja.png'
   },
   {
@@ -841,6 +932,7 @@ const produtos = [
     preco: 18.00,
     categoria: 'sobremesas',
     destaque: false,
+    promocao: false,
     imagem: './assets/baladeiro/creme-morango.png'
   }
 ];
