@@ -20,15 +20,26 @@ const categorias = [
 
 const produtos = [
   {
-    id: 1,
+    id: 0,
     nome: 'Heineken 600 ml',
     descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
     preco: 14.90,
     precoPromocional: 13.90,
     categoria: 'cervejas-garrafa',
-    destaque: false,
+    destaque: true,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/heineken.png'
+  },
+  {
+    id: 1,
+    nome: 'Brahma 600 ml',
+    descricao: 'Cerveja gelada, leve e refrescante, com sabor equilibrado e aquele gostinho clássico de Brahma.',
+    preco: 11.90,
+    precoPromocional: 9.99,
+    categoria: 'cervejas-garrafa',
+    destaque: true,
+    promocao: true,
+    imagem: './assets/cervejas/cervejas-garrafa/brahma.png'
   },
   {
     id: 2,
@@ -37,7 +48,7 @@ const produtos = [
     preco: 11.90,
     precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
-    destaque: false,
+    destaque: true,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/amstel.png'
   },
@@ -58,7 +69,7 @@ const produtos = [
     preco: 11.90,
     precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
-    destaque: false,
+    destaque: true,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/antarctica.png'
   },
@@ -79,7 +90,7 @@ const produtos = [
     preco: 11.90,
     precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
-    destaque: false,
+    destaque: true,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/skol.png'
   },
@@ -250,7 +261,7 @@ const produtos = [
     preco: 33.00,
     adicional: { nome: 'Maionese', preco: 3.00 },
     categoria: 'petiscos',
-    destaque: true,
+    destaque: false,
     promocao: false,
     selo: 'CROCANTE',
     imagem: './assets/petiscos/batatatradicional.png'
@@ -285,7 +296,7 @@ const produtos = [
     descricao: 'Pedaços de frango bem temperados, fritinhos e irresistivelmente crocantes.',
     preco: 39.00,
     categoria: 'petiscos',
-    destaque: true,
+    destaque: false,
     promocao: false,
     selo: 'ESPECIAL',
     imagem: './assets/petiscos/frangopassarinho.png'
@@ -321,7 +332,6 @@ const produtos = [
     categoria: 'petiscos',
     destaque: true,
     promocao: true,
-    selo: 'IRRESISTÍVEL',
     imagem: './assets/petiscos/filetilapia.jpg'
   },
   {
@@ -353,7 +363,7 @@ const produtos = [
     descricao: 'Uma seleção especial de frios e queijos, perfeita para compartilhar.',
     preco: 68.00,
     categoria: 'petiscos',
-    destaque: true,
+    destaque: false,
     promocao: false,
     selo: 'PARA COMPARTILHAR',
     imagem: './assets/petiscos/tabuadefrios.jpg'
@@ -378,7 +388,7 @@ const produtos = [
     preco: 99.00,
     categoria: 'chapa',
     selo: 'DELICIOSO',
-    destaque: true,
+    destaque: false,
     promocao: false,
     imagem: 'assets/chapa/picanhachapa.jpg'
   },
@@ -445,7 +455,6 @@ const produtos = [
     categoria: 'janta',
     destaque: true,
     promocao: true,
-    selo: 'DESTAQUE',
     imagem: 'assets/chapa/jantinha.jpg'
   },
   {
