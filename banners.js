@@ -18,17 +18,6 @@ const banners = [
   },
   {
     exibir: true,
-    imagem: '/assets/banners/promo.png',
-    imagemDesktop: 'assets/banners/promoweb.png',
-    alt: '',
-    chamada: '',
-    titulo: '',
-    destaque: '',
-    descricao: '',
-    exibirContagem: true,
-  },
-  {
-    exibir: true,
     imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRgEjBEJANA2Y8s8YfGbxJFy9jjoYvZtd2Ggctog2sNgidNPDX4BrHQN4&s=10',
     alt: 'Hambúrguer com queijo, salada e molho especial',
     chamada: 'Fique à vontade',

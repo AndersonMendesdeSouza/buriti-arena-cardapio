@@ -24,9 +24,8 @@ const produtos = [
     nome: 'Heineken 600 ml',
     descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
     preco: 14.90,
-    precoPromocional: 13.90,
     categoria: 'cervejas-garrafa',
-    destaque: true,
+    destaque: false,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/heineken.png'
   },
@@ -35,9 +34,8 @@ const produtos = [
     nome: 'Brahma 600 ml',
     descricao: 'Cerveja gelada, leve e refrescante, com sabor equilibrado e aquele gostinho clássico de Brahma.',
     preco: 11.90,
-    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
-    destaque: true,
+    destaque: false,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/brahma.png'
   },
@@ -46,9 +44,8 @@ const produtos = [
     nome: 'Amstel 600 ml',
     descricao: 'Cerveja puro malte, equilibrada e de sabor suave.',
     preco: 11.90,
-    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
-    destaque: true,
+    destaque: false,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/amstel.png'
   },
@@ -67,9 +64,8 @@ const produtos = [
     nome: 'Antarctica 600 ml',
     descricao: 'Cerveja clássica, leve e refrescante, ideal para bons momentos.',
     preco: 11.90,
-    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
-    destaque: true,
+    destaque: false,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/antarctica.png'
   },
@@ -88,9 +84,8 @@ const produtos = [
     nome: 'Skol 600 ml',
     descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
     preco: 11.90,
-    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
-    destaque: true,
+    destaque: false,
     promocao: true,
     imagem: './assets/cervejas/cervejas-garrafa/skol.png'
   },
@@ -273,7 +268,7 @@ const produtos = [
     preco: 38.00,
     categoria: 'petiscos',
     adicional: { nome: 'Maionese', preco: 3.00 },
-    destaque: false,
+    destaque: true,
     promocao: false,
     selo: 'CROCANTE',
     imagem: './assets/petiscos/batataarena.jpg'
@@ -328,9 +323,8 @@ const produtos = [
     nome: 'Filé de tilápia',
     descricao: 'Filés de tilápia douradinhos, macios por dentro e crocantes por fora.',
     preco: 49.90,
-    precoPromocional: 44.90,
     categoria: 'petiscos',
-    destaque: true,
+    destaque: false,
     promocao: true,
     imagem: './assets/petiscos/filetilapia.jpg'
   },
@@ -388,7 +382,7 @@ const produtos = [
     preco: 99.00,
     categoria: 'chapa',
     selo: 'DELICIOSO',
-    destaque: false,
+    destaque: true,
     promocao: false,
     imagem: 'assets/chapa/picanhachapa.jpg'
   },
@@ -398,7 +392,7 @@ const produtos = [
     descricao: 'Contrafilé macio e suculento, preparado na chapa quente e servido no ponto certo.',
     preco: 78.00,
     categoria: 'chapa',
-    destaque: false,
+    destaque: true,
     promocao: false,
     imagem: 'assets/chapa/contrafilechapa.jpg'
   },
@@ -410,7 +404,7 @@ const produtos = [
     descricao: 'Arroz branquinho, soltinho e fresquinho, perfeito para acompanhar sua refeição.',
     preco: 12.00,
     categoria: 'guarnicoes',
-    destaque: false,
+    destaque: true,
     promocao: false,
     imagem: 'assets/chapa/arroz.jpg'
   },
@@ -451,9 +445,8 @@ const produtos = [
     nome: 'Jantinha completa',
     descricao: 'Uma refeição caprichada com arroz, feijão, espetinho suculento e salada fresquinha.',
     preco: 28.00,
-    precoPromocional: 24.99,
     categoria: 'janta',
-    destaque: true,
+    destaque: false,
     promocao: true,
     imagem: 'assets/chapa/jantinha.jpg'
   },
@@ -485,7 +478,7 @@ const produtos = [
     descricao: 'Drink especial com Licor 43, sabor suave, adocicado e refrescante.',
     preco: 39.00,
     categoria: 'drinks',
-    destaque: false,
+    destaque: true,
     promocao: false,
     imagem: './assets/drinks/arena.jpg'
   },
