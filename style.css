@@ -380,6 +380,43 @@ footer {
 .footer-credits a svg { width: 16px; height: 16px; flex: none; }
 .footer-credits a:hover { color: var(--green); }
 
+.notice-page { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+.notice-main { flex: 1; display: grid; place-items: center; width: 100%; padding: 48px 24px; }
+.notice-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 40px 32px 28px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: #fff;
+  text-align: center;
+}
+.notice-icon {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 24px;
+  border-radius: 24px;
+  background: var(--green-soft);
+  color: var(--green);
+}
+.notice-icon svg { width: 56px; height: 56px; }
+.notice-eyebrow { margin-bottom: 12px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+.notice-card h1 { margin-bottom: 16px; font-size: clamp(30px, 5vw, 42px); font-weight: 600; line-height: 1.2; letter-spacing: -1.2px; }
+.notice-card h1 span { color: #356f50; }
+.notice-description { max-width: 34ch; margin: 0 auto 28px; color: var(--muted); font-size: 16px; }
+.notice-help { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 16px; background: var(--green-soft); color: #356f50; }
+.notice-help svg { width: 24px; height: 24px; flex: none; }
+.notice-help p { margin: 0; font-size: 14px; }
+.notice-signoff { margin: 20px 0 0; color: var(--muted); font-size: 13px; }
+.notice-footer { width: 100%; margin: 0 auto; padding: 0 24px 24px; gap: 16px; border: 0; background: transparent; }
+.notice-location { margin: 0; color: var(--muted); font-size: 12px; }
+.notice-location span { margin-inline: 6px; }
+.notice-footer .footer-credits { max-width: 600px; padding-top: 16px; gap: 10px; font-size: 11px; }
+.notice-footer .footer-developer { flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 6px 12px; }
+.notice-footer .footer-credits a { min-height: 44px; }
+
 @media (max-width: 900px) {
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 }
@@ -442,6 +479,14 @@ footer {
   .product-grid::-webkit-scrollbar-track { background: transparent; }
   .product-info { padding: 20px; }
   footer { padding: 32px 20px 24px; gap: 22px; }
+  .notice-main { padding: 28px 16px; }
+  .notice-card { padding: 32px 20px 24px; border-radius: 24px; }
+  .notice-card h1 { font-size: clamp(26px, 7.5vw, 36px); letter-spacing: -.8px; }
+  .notice-eyebrow { font-size: 11px; letter-spacing: .7px; }
+  .notice-description { font-size: 15px; }
+  .notice-help { padding: 14px 12px; text-align: left; }
+  .notice-help p { font-size: 13px; }
+  .notice-footer { padding: 0 16px 20px; gap: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

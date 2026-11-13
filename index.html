@@ -4,20 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="description" content="Conheça o cardápio digital do Buriti Arena. Drinks, porções e muito mais." />
+  <meta name="theme-color" content="#f7f7f7" />
+  <meta name="description" content="Nosso cardápio está na sua mesa. Confira as opções do Buriti Arena no cardápio físico." />
   <title>Cardápio | Buriti Arena</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <script src="produtos.js" defer></script>
-  <script src="banners.js" defer></script>
   <script src="config.js" defer></script>
-  <script src="script.js" defer></script>
+  <script src="registro-acesso.js" defer></script>
 </head>
 
-<body>
+<body class="notice-page">
   <header class="topbar">
     <a href="#inicio" class="brand" aria-label="Voltar ao início"><img src="logo.png"
         alt="Logo Buriti Arena" /><span><strong>Buriti Arena</strong><small>O seu lugar é aqui</small></span></a>
@@ -29,38 +27,28 @@
         <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
       </svg><span>Instagram</span></a>
   </header>
-  <main id="inicio">
-    <section class="menu-section" id="cardapio" aria-label="Cardápio Buriti Arena">
-      <div id="banner-carousel" aria-label="Banners do cardápio"></div>
-      <div class="menu-controls">
-        <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="10.8" cy="10.8" r="6.8" />
-            <path d="m16 16 5 5" />
-          </svg><input id="search" type="search" placeholder="O que deu vontade de comer?" autocomplete="off"
-            aria-label="Buscar produtos" /></div>
-        <nav class="categories" id="categories" aria-label="Categorias do cardápio"></nav>
+  <main class="notice-main" id="inicio">
+    <section class="notice-card" aria-labelledby="notice-title">
+      <div class="notice-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 17c-7-5-15-6-23-4v32c8-2 16-1 23 4 7-5 15-6 23-4V13c-8-2-16-1-23 4Z" />
+          <path d="M32 17v32M16 22c3 0 6 1 9 2M16 29c3 0 6 1 9 2M16 36c3 0 6 1 9 2M39 24c3-1 6-2 9-2M39 31c3-1 6-2 9-2M39 38c3-1 6-2 9-2M5 55h54" />
+        </svg>
       </div>
-      <p class="search-summary" id="search-summary" role="status" hidden></p>
-      <div class="product-sections" id="products" aria-live="polite"></div>
-      <div id="empty-state" class="empty-state" hidden>
-        <h3>Nada por aqui...</h3>
-        <p>Experimente outro termo ou escolha uma categoria diferente.</p><button id="reset-filters">Ver todo o
-          cardápio</button>
+      <p class="notice-eyebrow">Bem-vindo ao Buriti Arena</p>
+      <h1 id="notice-title">Nosso cardápio<br /><span>está na sua mesa.</span></h1>
+      <p class="notice-description">Confira nossas opções no cardápio físico disponível na mesa.</p>
+      <div class="notice-help">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 16a8 8 0 0 1 16 0M3 16h18M12 8V6M10 6h4M5 20h14" />
+        </svg>
+        <p>Se precisar, é só chamar nossa equipe.</p>
       </div>
+      <p class="notice-signoff">Fique à vontade e aproveite!</p>
     </section>
   </main>
-  <footer>
-    <div class="footer-brand"><img src="logo.png" alt="" /><span>Buriti Arena<small>Buriti Alegre · GO</small></span>
-    </div>
-    <a class="footer-instagram" href="https://www.instagram.com/buritiarena/" target="_blank" rel="noopener noreferrer"
-      aria-label="Siga o Buriti Arena no Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-      </svg>
-      Siga no Instagram
-    </a>
+  <footer class="notice-footer">
+    <p class="notice-location">Buriti Arena <span aria-hidden="true">·</span> Buriti Alegre, GO</p>
     <div class="footer-credits">
       <span>© 2026 Buriti Arena. Todos os direitos reservados.</span>
       <div class="footer-developer">
@@ -84,7 +72,6 @@
           </svg>
           <span>(64) 99999-9687</span>
         </a>
-        <p class="footer-contact-hint">Toque no nome para ver meu Instagram ou no número para conversar no WhatsApp.</p>
       </div>
     </div>
   </footer>
