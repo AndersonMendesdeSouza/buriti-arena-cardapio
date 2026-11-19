@@ -64,6 +64,7 @@ const produtos = [
     nome: 'Antarctica 600 ml',
     descricao: 'Cerveja clássica, leve e refrescante, ideal para bons momentos.',
     preco: 11.90,
+    precoPromocional: 9.99,
     categoria: 'cervejas-garrafa',
     destaque: false,
     promocao: true,
@@ -220,9 +221,10 @@ const produtos = [
     nome: 'Chopp Brahma',
     descricao: 'Cerveja leve, suave e refrescante, perfeita para compartilhar.',
     preco: 9.90,
+    precoPromocional: 7.99,
     categoria: 'chopp',
     destaque: false,
-    promocao: false,
+    promocao: true,
     imagem: './assets/cervejas/cervejas-lata/chopp.png'
   },
 

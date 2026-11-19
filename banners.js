@@ -5,9 +5,9 @@ const carrosselAtivo = true;
 // Use exibir: false para ocultar um banner.
 const banners = [
   {
-    exibir: false,
-    imagem: 'assets/banners/choopduplo.png',
-    imagemDesktop: 'assets/banners/choopduploweb.png',
+    exibir: true,
+    imagem: 'assets/banners/promo.png',
+    imagemDesktop: 'assets/banners/promoweb.png',
     alt: 'Hoje é dia de chopp duplo. Mais sabor, mais momentos.',
     // Deixe os textos vazios para exibir somente a imagem.
     chamada: '',
