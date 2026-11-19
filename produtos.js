@@ -20,6 +20,17 @@ const categorias = [
 
 const produtos = [
   {
+    id: 88,
+    nome: 'Galinhada',
+    descricao: 'Deliciosa galinhada com arroz bem temperado, pedaços suculentos de frango e aquele sabor irresistível de comida caseira!',
+    preco: 23.99,
+    categoria: 'janta',
+    selo: 'MAIS PEDIDO',
+    destaque: true,
+    promocao: true,
+    imagem: 'assets/chapa/galinhada.png'
+  },
+  {
     id: 0,
     nome: 'Heineken 600 ml',
     descricao: 'Cerveja puro malte, refrescante e de sabor marcante.',
@@ -938,5 +949,6 @@ const produtos = [
     destaque: false,
     promocao: false,
     imagem: './assets/baladeiro/creme-morango.png'
-  }
+  },
+
 ];
