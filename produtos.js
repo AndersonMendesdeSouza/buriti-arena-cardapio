@@ -64,11 +64,21 @@ const produtos = [
     id: 3,
     nome: 'Corona Extra 600 ml',
     descricao: 'Cerveja leve, suave e refrescante, com sabor delicado.',
-    preco: 15.90,
+    preco: 17.90,
     categoria: 'cervejas-garrafa',
     destaque: false,
     promocao: false,
     imagem: './assets/cervejas/cervejas-garrafa/corona.png'
+  },
+  {
+    id: 91,
+    nome: 'Stella Artois Pure Gold',
+    descricao: 'Cerveja puro malte, leve e refrescante, com sabor suave e equilibrado. Sem glúten e com menos calorias.',
+    preco: 17.90,
+    categoria: 'cervejas-garrafa',
+    destaque: false,
+    promocao: false,
+    imagem: './assets/cervejas/cervejas-garrafa/stella-pure-gold.png'
   },
   {
     id: 4,
@@ -335,7 +345,7 @@ const produtos = [
     id: 28,
     nome: 'Filé de tilápia',
     descricao: 'Filés de tilápia douradinhos, macios por dentro e crocantes por fora.',
-    preco: 49.90,
+    preco: 55.00,
     categoria: 'petiscos',
     destaque: false,
     promocao: true,
